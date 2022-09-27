@@ -23,3 +23,17 @@ model User {
 
   @@map("users")
 }
+
+model Cooperative {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  email      String   @unique
+  password   String
+  uf         String
+  city       String
+  latitude   String
+  longitude  String
+  created_at DateTime @default(now())
+
+  @@map("cooperatives")
+}
