@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { createUserSchema as createUser } from "../schemas/userSchemas";
+import { createUserSchema as createCooperative } from "../schemas/cooperativeSchemas";
 
 import { CustomError } from "../entities/CustomError";
 
 const Schemas = {
   createUser,
+  createCooperative,
 };
 
 type Validator = keyof typeof Schemas;
