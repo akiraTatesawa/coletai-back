@@ -1,16 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import {
-  userSignInSchema as signIn,
-  userSignUpSchema as signUp,
-} from "../schemas/authSchemas";
-import { testSchema as test } from "../schemas/testSchemas";
+import { createUserSchema as createUser } from "../schemas/userSchemas";
 
 import { CustomError } from "../entities/CustomError";
 
 const Schemas = {
-  signIn,
-  signUp,
-  test,
+  createUser,
 };
 
 type Validator = keyof typeof Schemas;
