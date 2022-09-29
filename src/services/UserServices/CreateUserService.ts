@@ -2,6 +2,8 @@ import { IServiceExecute } from "../../@types/ServiceTypes";
 import { CreateUserPrisma } from "../../@types/UserTypes";
 import { IUserRepository } from "../../repositories/IUserRepository";
 import { CustomError } from "../../entities/CustomError";
+import { ICryptUtils } from "../../utils/CryptUtils";
+import { User } from "../../entities/User";
 
 type UserEmail = Pick<CreateUserPrisma, "email">;
 
@@ -11,8 +13,11 @@ export interface ICreateUserService
 export class CreateUserService implements ICreateUserService {
   private repository: IUserRepository;
 
-  constructor(repository: IUserRepository) {
+  private cryptUtils: ICryptUtils;
+
+  constructor(repository: IUserRepository, cryptUtils: ICryptUtils) {
     this.repository = repository;
+    this.cryptUtils = cryptUtils;
   }
 
   private async isUnique({ email }: UserEmail): Promise<boolean> {
@@ -35,6 +40,8 @@ export class CreateUserService implements ICreateUserService {
       );
     }
 
-    await this.repository.insert(data);
+    const user = new User(data, this.cryptUtils);
+
+    await this.repository.insert(user);
   }
 }
