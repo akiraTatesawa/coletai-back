@@ -2,6 +2,8 @@ import { IServiceExecute } from "../../@types/ServiceTypes";
 import { CreateCooperativePrisma } from "../../@types/CooperativeTypes";
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
 import { CustomError } from "../../entities/CustomError";
+import { ICryptUtils } from "../../utils/CryptUtils";
+import { Cooperative } from "../../entities/Cooperative";
 
 type CooperativeEmail = Pick<CreateCooperativePrisma, "email">;
 type CooperativeName = Pick<CreateCooperativePrisma, "name">;
@@ -12,8 +14,11 @@ export interface ICreateCooperativeService
 export class CreateCooperativeService implements ICreateCooperativeService {
   private repository: ICooperativeRepository;
 
-  constructor(repository: ICooperativeRepository) {
+  private cryptUtils: ICryptUtils;
+
+  constructor(repository: ICooperativeRepository, cryptUtils: ICryptUtils) {
     this.repository = repository;
+    this.cryptUtils = cryptUtils;
   }
 
   async isEmailUnique({ email }: CooperativeEmail): Promise<boolean> {
@@ -48,6 +53,10 @@ export class CreateCooperativeService implements ICreateCooperativeService {
         `The cooperative name '${data.name}' is already being used`
       );
     }
-    await this.repository.insert(data);
+    const cooperative = new Cooperative(data, this.cryptUtils);
+
+    console.log(cooperative);
+
+    await this.repository.insert(cooperative);
   }
 }
