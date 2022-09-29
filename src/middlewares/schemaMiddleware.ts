@@ -3,7 +3,10 @@ import {
   createUserSchema as createUser,
   loginUserSchema as loginUser,
 } from "../schemas/userSchemas";
-import { createUserSchema as createCooperative } from "../schemas/cooperativeSchemas";
+import {
+  createUserSchema as createCooperative,
+  loginCooperativeSchema as loginCooperative,
+} from "../schemas/cooperativeSchemas";
 
 import { CustomError } from "../entities/CustomError";
 
@@ -11,6 +14,7 @@ const Schemas = {
   createUser,
   loginUser,
   createCooperative,
+  loginCooperative,
 };
 
 type Validator = keyof typeof Schemas;
