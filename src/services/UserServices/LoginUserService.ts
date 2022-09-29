@@ -1,37 +1,15 @@
-import { IServiceExecute } from "../../@types/ServiceTypes";
+import { IServiceExecute, LoginService } from "../../@types/ServiceTypes";
 import { Token } from "../../@types/TokenTypes";
 import { LoginUser } from "../../@types/UserTypes";
 import { IUserRepository } from "../../repositories/IUserRepository";
-import { ICryptUtils } from "../../utils/CryptUtils";
-import { JWTUtilsInterface } from "../../utils/JWTUtils";
 import { CustomError } from "../../entities/CustomError";
 
 export interface ILoginUserService extends IServiceExecute<LoginUser, Token> {}
 
-export class LoginUserService implements ILoginUserService {
-  private repository: IUserRepository;
-
-  private cryptUtils: ICryptUtils;
-
-  private jwtUtils: JWTUtilsInterface;
-
-  constructor(
-    repository: IUserRepository,
-    cryptUtils: ICryptUtils,
-    jwtUtils: JWTUtilsInterface
-  ) {
-    this.repository = repository;
-    this.cryptUtils = cryptUtils;
-    this.jwtUtils = jwtUtils;
-  }
-
-  private isPasswordCorrect(
-    reqPassword: string,
-    userPassword: string
-  ): boolean {
-    return this.cryptUtils.validateEncryptedData(reqPassword, userPassword);
-  }
-
+export class LoginUserService
+  extends LoginService<IUserRepository>
+  implements ILoginUserService
+{
   async execute(userLoginData: LoginUser): Promise<Token> {
     const user = await this.repository.getByEmail(userLoginData.email);
     if (!user) {
