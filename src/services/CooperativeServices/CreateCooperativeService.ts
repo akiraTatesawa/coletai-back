@@ -55,8 +55,6 @@ export class CreateCooperativeService implements ICreateCooperativeService {
     }
     const cooperative = new Cooperative(data, this.cryptUtils);
 
-    console.log(cooperative);
-
     await this.repository.insert(cooperative);
   }
 }
