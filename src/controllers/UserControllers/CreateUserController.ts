@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 
 import { Controller } from "../../@types/ControllerTypes";
 import { ICreateUserService } from "../../services/UserServices/CreateUserService";
-import { CreateUserData } from "../../@types/UserTypes";
+import { CreateUserPrisma } from "../../@types/UserTypes";
 
 export class CreateUserController extends Controller<ICreateUserService> {
   async handle(req: Request, res: Response): Promise<void> {
-    const createUserData: CreateUserData = req.body;
+    const createUserData: CreateUserPrisma = req.body;
 
     await this.service.execute(createUserData);
 

@@ -1,13 +1,12 @@
 import { IServiceExecute } from "../../@types/ServiceTypes";
-import { CreateUserData } from "../../@types/UserTypes";
+import { CreateUserPrisma } from "../../@types/UserTypes";
 import { IUserRepository } from "../../repositories/IUserRepository";
 import { CustomError } from "../../entities/CustomError";
 
-type UserEmail = Pick<CreateUserData, "email">;
-type UserPasswords = Pick<CreateUserData, "confirmPassword" | "password">;
+type UserEmail = Pick<CreateUserPrisma, "email">;
 
 export interface ICreateUserService
-  extends IServiceExecute<CreateUserData, void> {}
+  extends IServiceExecute<CreateUserPrisma, void> {}
 
 export class CreateUserService implements ICreateUserService {
   private repository: IUserRepository;
@@ -26,17 +25,7 @@ export class CreateUserService implements ICreateUserService {
     return false;
   }
 
-  private isPasswordsMatching({
-    confirmPassword,
-    password,
-  }: UserPasswords): boolean {
-    if (confirmPassword === password) {
-      return true;
-    }
-    return false;
-  }
-
-  async execute({ confirmPassword, ...data }: CreateUserData): Promise<void> {
+  async execute(data: CreateUserPrisma): Promise<void> {
     const isEmailUnique = await this.isUnique({ email: data.email });
 
     if (!isEmailUnique) {
@@ -44,15 +33,6 @@ export class CreateUserService implements ICreateUserService {
         "error_conflict",
         `The email ${data.email} is already being used`
       );
-    }
-
-    const isMatching = this.isPasswordsMatching({
-      confirmPassword,
-      password: data.password,
-    });
-
-    if (!isMatching) {
-      throw new CustomError("error_bad_request", "Passwords don't match");
     }
 
     await this.repository.insert(data);

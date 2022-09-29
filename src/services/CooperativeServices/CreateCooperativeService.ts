@@ -1,13 +1,13 @@
 import { IServiceExecute } from "../../@types/ServiceTypes";
-import { CreateCooperativeData } from "../../@types/CooperativeTypes";
+import { CreateCooperativePrisma } from "../../@types/CooperativeTypes";
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
 import { CustomError } from "../../entities/CustomError";
 
-type CooperativeEmail = Pick<CreateCooperativeData, "email">;
-type CooperativeName = Pick<CreateCooperativeData, "name">;
+type CooperativeEmail = Pick<CreateCooperativePrisma, "email">;
+type CooperativeName = Pick<CreateCooperativePrisma, "name">;
 
 export interface ICreateCooperativeService
-  extends IServiceExecute<CreateCooperativeData, void> {}
+  extends IServiceExecute<CreateCooperativePrisma, void> {}
 
 export class CreateCooperativeService implements ICreateCooperativeService {
   private repository: ICooperativeRepository;
@@ -32,10 +32,7 @@ export class CreateCooperativeService implements ICreateCooperativeService {
     return true;
   }
 
-  async execute({
-    confirmPassword,
-    ...data
-  }: CreateCooperativeData): Promise<void> {
+  async execute(data: CreateCooperativePrisma): Promise<void> {
     const isEmailUnique = await this.isEmailUnique({ email: data.email });
     if (!isEmailUnique) {
       throw new CustomError(
@@ -51,11 +48,6 @@ export class CreateCooperativeService implements ICreateCooperativeService {
         `The cooperative name '${data.name}' is already being used`
       );
     }
-
-    if (confirmPassword !== data.password) {
-      throw new CustomError("error_bad_request", "Passwords don't match");
-    }
-
     await this.repository.insert(data);
   }
 }
