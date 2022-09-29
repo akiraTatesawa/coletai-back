@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc && prisma generate && npx prisma migrate deploy && npx prisma db seed",
-    "start": "node ./dist/src/server.js",
+    "build": "npx tsc && prisma generate && npx prisma migrate deploy",
+    "start": "node ./dist/server.js",
     "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules ./src/server.ts"
   },
   "repository": {

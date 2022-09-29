@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../entities/CustomError";
-import { Utils } from "../utils";
+import { JWTUtils } from "../utils/JWTUtils";
 
 export async function validateToken(
   req: Request,
@@ -16,7 +16,9 @@ export async function validateToken(
   }
 
   try {
-    const { userId } = (await Utils.JwtUtils.verifyToken(
+    const jwtUtils = new JWTUtils(process.env.JWT_SECRET);
+
+    const { userId } = (await jwtUtils.verifyToken(
       authorization.replace("Bearer ", "")
     )) as {
       userId: number;
