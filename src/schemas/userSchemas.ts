@@ -1,13 +1,10 @@
 import Joi from "joi";
-import { CreateUserData } from "../@types/UserTypes";
+import { CreateUserPrisma } from "../@types/UserTypes";
 
-export const createUserSchema = Joi.object<CreateUserData>({
-  username: Joi.string().trim().required(),
+export const createUserSchema = Joi.object<CreateUserPrisma>({
+  name: Joi.string().trim().required(),
   email: Joi.string().email({ tlds: false }).trim().required(),
   password: Joi.string().required(),
-  confirmPassword: Joi.string().required(),
-  uf: Joi.string().length(2).required(),
-  city: Joi.string().required(),
-  latitude: Joi.string().required(),
-  longitude: Joi.string().required(),
+  latitude: Joi.number().required(),
+  longitude: Joi.number().required(),
 });

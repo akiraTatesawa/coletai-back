@@ -12,13 +12,11 @@ datasource db {
 
 model User {
   id         String   @id @default(uuid())
-  username   String
+  name       String
   email      String   @unique
   password   String
-  uf         String
-  city       String
-  latitude   String
-  longitude  String
+  latitude   Float
+  longitude  Float
   created_at DateTime @default(now())
 
   @@map("users")
@@ -29,10 +27,8 @@ model Cooperative {
   name       String   @unique
   email      String   @unique
   password   String
-  uf         String
-  city       String
-  latitude   String
-  longitude  String
+  latitude   Float
+  longitude  Float
   created_at DateTime @default(now())
 
   @@map("cooperatives")
