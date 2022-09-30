@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc && prisma generate && npx prisma migrate deploy",
+    "build": "npx tsc && prisma generate && npx prisma migrate deploy && npx prisma db seed",
     "start": "node ./dist/server.js",
     "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules ./src/server.ts"
+  },
+  "prisma": {
+    "seed": "ts-node ./prisma/Seed.ts"
   },
   "repository": {
     "type": "git",
@@ -50,6 +53,7 @@
     "@ngneat/falso": "^6.1.0",
     "@prisma/client": "^4.3.1",
     "bcrypt": "^5.0.1",
+    "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.5",
     "dotenv": "^16.0.1",
