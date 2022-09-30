@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "dotenv -e .env.test -- jest --runInBand",
     "build": "npx tsc && prisma generate && npx prisma migrate deploy && npx prisma db seed",
     "start": "node ./dist/server.js",
     "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules ./src/server.ts"
