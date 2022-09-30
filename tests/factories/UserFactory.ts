@@ -7,7 +7,7 @@ import {
   randUuid,
 } from "@ngneat/falso";
 import { PrismaClient, User as PrismaUser } from "@prisma/client";
-import { CreateUserPrisma } from "../../src/@types/UserTypes";
+import { CreateUserPrisma, LoginUser } from "../../src/@types/UserTypes";
 import { User } from "../../src/entities/User";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
 
@@ -54,8 +54,15 @@ export class UserFactory {
     return { prismaUser, reqUser: data };
   }
 
-  async createPrismaUser(): Promise<CreateUserPrisma> {
+  async createPrismaUser(): Promise<{
+    reqUser: CreateUserPrisma;
+    loginUser: LoginUser;
+  }> {
     const reqUser = this.generateReqSignUpUserData();
+    const loginUser: LoginUser = {
+      email: reqUser.email,
+      password: reqUser.password,
+    };
 
     const user = new User(reqUser, this.cryptUtils);
 
@@ -63,6 +70,13 @@ export class UserFactory {
       data: user,
     });
 
-    return reqUser;
+    return { reqUser, loginUser };
+  }
+
+  generateReqLoginUserData(): LoginUser {
+    return {
+      email: randEmail(),
+      password: randPassword(),
+    };
   }
 }
