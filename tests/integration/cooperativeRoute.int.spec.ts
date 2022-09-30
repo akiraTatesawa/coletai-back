@@ -39,7 +39,8 @@ describe("POST /cooperatives", () => {
   });
 
   it("409: Should not be able to create a cooperative that already exists", async () => {
-    const reqCooperative = await cooperativeFactory.createPrismaCooperative();
+    const { reqCooperative } =
+      await cooperativeFactory.createPrismaCooperative();
 
     const result = await request(app)
       .post("/cooperatives")
@@ -47,5 +48,60 @@ describe("POST /cooperatives", () => {
 
     expect(result.status).toEqual(409);
     expect(result.body).toHaveProperty("name", "Conflict");
+  });
+});
+
+describe("POST /cooperatives/sign-in", () => {
+  beforeEach(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE cooperatives`;
+  });
+  afterAll(() => {
+    prisma.$disconnect();
+  });
+
+  const cooperativeFactory = new CooperativeFactory();
+
+  it("200: Should be able to login", async () => {
+    const { reqLogin } = await cooperativeFactory.createPrismaCooperative();
+
+    const result = await request(app)
+      .post("/cooperatives/sign-in")
+      .send(reqLogin);
+
+    expect(result.status).toEqual(200);
+    expect(result.body).toHaveProperty("token");
+  });
+
+  it("422: Should not be able to login with an invalid req body", async () => {
+    const reqLogin = cooperativeFactory.generateLoginCooperativeData();
+
+    const result = await request(app)
+      .post("/cooperatives/sign-in")
+      .send({ ...reqLogin, invalidField: "" });
+
+    expect(result.status).toEqual(422);
+    expect(result.body).toHaveProperty("name", "Unprocessable Entity");
+  });
+
+  it("404: Should not be able to login if cooperative is not registered", async () => {
+    const reqLogin = cooperativeFactory.generateLoginCooperativeData();
+
+    const result = await request(app)
+      .post("/cooperatives/sign-in")
+      .send(reqLogin);
+
+    expect(result.status).toEqual(404);
+    expect(result.body).toHaveProperty("name", "Not Found");
+  });
+
+  it("401: Should not be able to login if the password is wrong", async () => {
+    const { reqLogin } = await cooperativeFactory.createPrismaCooperative();
+
+    const result = await request(app)
+      .post("/cooperatives/sign-in")
+      .send({ ...reqLogin, password: "incorrect" });
+
+    expect(result.status).toEqual(401);
+    expect(result.body).toHaveProperty("name", "Unauthorized");
   });
 });

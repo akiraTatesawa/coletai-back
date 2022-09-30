@@ -7,7 +7,10 @@ import {
   randCompanyName,
 } from "@ngneat/falso";
 import { PrismaClient, Cooperative as PrismaCooperative } from "@prisma/client";
-import { CreateCooperativePrisma } from "../../src/@types/CooperativeTypes";
+import {
+  CreateCooperativePrisma,
+  LoginCooperative,
+} from "../../src/@types/CooperativeTypes";
 import { Cooperative } from "../../src/entities/Cooperative";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
 
@@ -58,8 +61,15 @@ export class CooperativeFactory {
     return { prismaCooperative, reqCooperative: data };
   }
 
-  async createPrismaCooperative(): Promise<CreateCooperativePrisma> {
+  async createPrismaCooperative(): Promise<{
+    reqLogin: LoginCooperative;
+    reqCooperative: CreateCooperativePrisma;
+  }> {
     const reqCooperative = this.generateReqSignUpCooperativeData();
+    const reqLogin: LoginCooperative = {
+      email: reqCooperative.email,
+      password: reqCooperative.password,
+    };
 
     const cooperative = new Cooperative(reqCooperative, this.cryptUtils);
 
@@ -67,6 +77,13 @@ export class CooperativeFactory {
       data: cooperative,
     });
 
-    return reqCooperative;
+    return { reqLogin, reqCooperative };
+  }
+
+  generateLoginCooperativeData(): LoginCooperative {
+    return {
+      email: randEmail(),
+      password: randPassword(),
+    };
   }
 }
