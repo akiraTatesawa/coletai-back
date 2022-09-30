@@ -6,13 +6,15 @@ import {
   randLongitude,
   randUuid,
 } from "@ngneat/falso";
-import { User as PrismaUser } from "@prisma/client";
+import { PrismaClient, User as PrismaUser } from "@prisma/client";
 import { CreateUserPrisma } from "../../src/@types/UserTypes";
 import { User } from "../../src/entities/User";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
 
 export class UserFactory {
   private cryptUtils: ICryptUtils = new CryptUtils();
+
+  private prisma: PrismaClient = new PrismaClient();
 
   generateReqSignUpUserData(): CreateUserPrisma {
     const data: CreateUserPrisma = {
@@ -24,6 +26,17 @@ export class UserFactory {
     };
 
     return data;
+  }
+
+  generateReqSignUpInvalidUserData(): Omit<CreateUserPrisma, "latitude"> {
+    const invalidData: Omit<CreateUserPrisma, "latitude"> = {
+      name: randUserName(),
+      email: randEmail(),
+      password: randPassword(),
+      longitude: randLongitude(),
+    };
+
+    return invalidData;
   }
 
   generatePrismaUserData(): {
@@ -39,5 +52,17 @@ export class UserFactory {
     };
 
     return { prismaUser, reqUser: data };
+  }
+
+  async createPrismaUser(): Promise<CreateUserPrisma> {
+    const reqUser = this.generateReqSignUpUserData();
+
+    const user = new User(reqUser, this.cryptUtils);
+
+    await this.prisma.user.create({
+      data: user,
+    });
+
+    return reqUser;
   }
 }

@@ -7,10 +7,10 @@ import { handleError } from "./middlewares/errorHandlingMiddleware";
 
 dotenv.config();
 
-export const server = express();
+export const app = express();
 
-server.use(cors());
-server.use(express.json());
+app.use(cors());
+app.use(express.json());
 
-server.use(serverRouter);
-server.use(handleError);
+app.use(serverRouter);
+app.use(handleError);
