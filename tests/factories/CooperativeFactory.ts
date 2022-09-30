@@ -11,7 +11,7 @@ import { CreateCooperativePrisma } from "../../src/@types/CooperativeTypes";
 import { Cooperative } from "../../src/entities/Cooperative";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
 
-export class UserFactory {
+export class CooperativeFactory {
   private cryptUtils: ICryptUtils = new CryptUtils();
 
   private prisma: PrismaClient = new PrismaClient();
