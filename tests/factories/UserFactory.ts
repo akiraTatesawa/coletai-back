@@ -54,8 +54,15 @@ export class UserFactory {
     return { prismaUser, reqUser: data };
   }
 
-  async createPrismaUser(): Promise<CreateUserPrisma> {
+  async createPrismaUser(): Promise<{
+    reqUser: CreateUserPrisma;
+    loginUser: LoginUser;
+  }> {
     const reqUser = this.generateReqSignUpUserData();
+    const loginUser: LoginUser = {
+      email: reqUser.email,
+      password: reqUser.password,
+    };
 
     const user = new User(reqUser, this.cryptUtils);
 
@@ -63,7 +70,7 @@ export class UserFactory {
       data: user,
     });
 
-    return reqUser;
+    return { reqUser, loginUser };
   }
 
   generateReqLoginUserData(): LoginUser {
