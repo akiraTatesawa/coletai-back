@@ -61,8 +61,15 @@ export class CooperativeFactory {
     return { prismaCooperative, reqCooperative: data };
   }
 
-  async createPrismaCooperative(): Promise<CreateCooperativePrisma> {
+  async createPrismaCooperative(): Promise<{
+    reqLogin: LoginCooperative;
+    reqCooperative: CreateCooperativePrisma;
+  }> {
     const reqCooperative = this.generateReqSignUpCooperativeData();
+    const reqLogin: LoginCooperative = {
+      email: reqCooperative.email,
+      password: reqCooperative.password,
+    };
 
     const cooperative = new Cooperative(reqCooperative, this.cryptUtils);
 
@@ -70,7 +77,7 @@ export class CooperativeFactory {
       data: cooperative,
     });
 
-    return reqCooperative;
+    return { reqLogin, reqCooperative };
   }
 
   generateLoginCooperativeData(): LoginCooperative {
