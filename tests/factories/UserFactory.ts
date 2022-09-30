@@ -7,7 +7,7 @@ import {
   randUuid,
 } from "@ngneat/falso";
 import { PrismaClient, User as PrismaUser } from "@prisma/client";
-import { CreateUserPrisma } from "../../src/@types/UserTypes";
+import { CreateUserPrisma, LoginUser } from "../../src/@types/UserTypes";
 import { User } from "../../src/entities/User";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
 
@@ -64,5 +64,12 @@ export class UserFactory {
     });
 
     return reqUser;
+  }
+
+  generateReqLoginUserData(): LoginUser {
+    return {
+      email: randEmail(),
+      password: randPassword(),
+    };
   }
 }
