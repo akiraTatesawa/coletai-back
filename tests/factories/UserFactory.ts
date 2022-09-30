@@ -26,6 +26,17 @@ export class UserFactory {
     return data;
   }
 
+  generateReqSignUpInvalidUserData(): Omit<CreateUserPrisma, "latitude"> {
+    const invalidData: Omit<CreateUserPrisma, "latitude"> = {
+      name: randUserName(),
+      email: randEmail(),
+      password: randPassword(),
+      longitude: randLongitude(),
+    };
+
+    return invalidData;
+  }
+
   generatePrismaUserData(): {
     prismaUser: PrismaUser;
     reqUser: CreateUserPrisma;

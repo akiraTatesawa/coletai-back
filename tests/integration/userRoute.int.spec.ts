@@ -22,4 +22,13 @@ describe("POST /users", () => {
     expect(result.status).toEqual(201);
     expect(result.body).toEqual({});
   });
+
+  it("422: Should not be able to create an user with invalid req body format", async () => {
+    const invalidReqUser = userFactory.generateReqSignUpInvalidUserData();
+
+    const result = await request(app).post("/users").send(invalidReqUser);
+
+    expect(result.status).toEqual(422);
+    expect(result.body).toHaveProperty("message");
+  });
 });

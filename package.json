@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "dotenv -e .env.test -- jest --runInBand",
+    "test": "dotenv -e .env.test -- npx prisma migrate dev && dotenv -e .env.test -- jest --runInBand",
     "test:unit": "jest unit",
     "test:int": "dotenv -e .env.test -- npx prisma migrate dev && dotenv -e .env.test -- jest int --runInBand",
     "build": "npx tsc && prisma generate && npx prisma migrate deploy && npx prisma db seed",
