@@ -29,6 +29,15 @@ describe("POST /users", () => {
     const result = await request(app).post("/users").send(invalidReqUser);
 
     expect(result.status).toEqual(422);
-    expect(result.body).toHaveProperty("message");
+    expect(result.body).toHaveProperty("name", "Unprocessable Entity");
+  });
+
+  it("409: Should not be able to create an user that already exists", async () => {
+    const reqUser = await userFactory.createPrismaUser();
+
+    const result = await request(app).post("/users").send(reqUser);
+
+    expect(result.status).toEqual(409);
+    expect(result.body).toHaveProperty("name", "Conflict");
   });
 });
