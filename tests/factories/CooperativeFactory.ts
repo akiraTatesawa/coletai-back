@@ -7,7 +7,10 @@ import {
   randCompanyName,
 } from "@ngneat/falso";
 import { PrismaClient, Cooperative as PrismaCooperative } from "@prisma/client";
-import { CreateCooperativePrisma } from "../../src/@types/CooperativeTypes";
+import {
+  CreateCooperativePrisma,
+  LoginCooperative,
+} from "../../src/@types/CooperativeTypes";
 import { Cooperative } from "../../src/entities/Cooperative";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
 
@@ -68,5 +71,12 @@ export class CooperativeFactory {
     });
 
     return reqCooperative;
+  }
+
+  generateLoginCooperativeData(): LoginCooperative {
+    return {
+      email: randEmail(),
+      password: randPassword(),
+    };
   }
 }
