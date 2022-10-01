@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "/server.js",
-  "node": "^18.x",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "test": "dotenv -e .env.test -- npx prisma migrate dev && dotenv -e .env.test -- jest --runInBand",
     "test:unit": "jest unit",
     "test:int": "dotenv -e .env.test -- npx prisma migrate dev && dotenv -e .env.test -- jest int --runInBand",
     "build": "npx tsc && npx prisma generate && npx prisma migrate deploy && npx prisma db seed",
-    "heroku-postbuild": "cd ./app",
     "start": "node dist/server.js",
     "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules ./src/server.ts"
   },
