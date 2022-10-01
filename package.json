@@ -2,12 +2,12 @@
   "name": "coletai-back",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "dotenv -e .env.test -- npx prisma migrate dev && dotenv -e .env.test -- jest --runInBand",
     "test:unit": "jest unit",
     "test:int": "dotenv -e .env.test -- npx prisma migrate dev && dotenv -e .env.test -- jest int --runInBand",
-    "build": "npx tsc && prisma generate && npx prisma migrate deploy && npx prisma db seed",
+    "build": "npx tsc && npx prisma generate && npx prisma migrate deploy && npx prisma db seed",
     "start": "node ./dist/server.js",
     "dev": "NODE_ENV=dev ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules ./src/server.ts"
   },
