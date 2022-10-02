@@ -11,25 +11,51 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  name       String
-  email      String   @unique
-  password   String
-  latitude   Float
-  longitude  Float
-  created_at DateTime @default(now())
+  id          String        @id @default(uuid())
+  name        String
+  email       String        @unique
+  password    String
+  latitude    Float
+  longitude   Float
+  created_at  DateTime      @default(now())
+  collections Collections[]
 
   @@map("users")
 }
 
 model Cooperative {
-  id         String   @id @default(uuid())
-  name       String   @unique
-  email      String   @unique
-  password   String
-  latitude   Float
-  longitude  Float
-  created_at DateTime @default(now())
+  id          String        @id @default(uuid())
+  name        String        @unique
+  email       String        @unique
+  password    String
+  latitude    Float
+  longitude   Float
+  created_at  DateTime      @default(now())
+  collections Collections[]
 
   @@map("cooperatives")
+}
+
+model ReyclingTypes {
+  id          String        @id @default(uuid())
+  name        String
+  created_at  DateTime      @default(now())
+  collections Collections[]
+
+  @@map("recycling_types")
+}
+
+model Collections {
+  id            String          @id @default(uuid())
+  userId        String
+  user          User            @relation(fields: [userId], references: [id])
+  cooperativeId String
+  cooperative   Cooperative     @relation(fields: [cooperativeId], references: [id])
+  is_finished   Boolean         @default(false)
+  is_cancelled  Boolean         @default(false)
+  types         ReyclingTypes[]
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+
+  @@map("collections")
 }
