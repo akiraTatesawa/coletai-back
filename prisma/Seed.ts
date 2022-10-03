@@ -53,6 +53,10 @@ class Seed implements ISeed {
         .$queryRaw`TRUNCATE TABLE users RESTART IDENTITY CASCADE;`;
       await this.prisma
         .$queryRaw`TRUNCATE TABLE cooperatives RESTART IDENTITY CASCADE;`;
+      await this.prisma
+        .$queryRaw`TRUNCATE TABLE collections RESTART IDENTITY CASCADE;`;
+      await this.prisma
+        .$queryRaw`TRUNCATE TABLE recycling_types RESTART IDENTITY CASCADE;`;
       console.log(chalk.green("OK!"));
 
       console.log(chalk.yellow("\nInserting users..."));
