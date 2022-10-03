@@ -1,10 +1,15 @@
 import { Collections } from "@prisma/client";
 
-type CollectionRequestData = Pick<Collections, "userId" | "cooperativeId">;
-
-type RecyclingType = {
+export type RecyclingType = {
   name: string;
 };
+
+type CollectionRequestData = Pick<Collections, "userId">;
+
+export interface CollectionInsertPrisma
+  extends Pick<Collections, "cooperativeId" | "userId"> {
+  types: RecyclingType[];
+}
 
 export interface CollectionRequest extends CollectionRequestData {
   types: RecyclingType[];
