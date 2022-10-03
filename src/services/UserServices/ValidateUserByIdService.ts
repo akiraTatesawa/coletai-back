@@ -4,10 +4,9 @@ import { IUserRepository } from "../../repositories/IUserRepository";
 import { CustomError } from "../../entities/CustomError";
 
 type InputUserId = Pick<User, "id">;
-type ValidateUserByIdOutput = User;
 
 export interface IValidateUserByIdService
-  extends IServiceExecute<InputUserId, ValidateUserByIdOutput> {}
+  extends IServiceExecute<InputUserId, User> {}
 
 export class ValidateUserByIdService implements IValidateUserByIdService {
   private repository: IUserRepository;
@@ -16,7 +15,7 @@ export class ValidateUserByIdService implements IValidateUserByIdService {
     this.repository = repository;
   }
 
-  async execute({ id }: InputUserId): Promise<ValidateUserByIdOutput> {
+  async execute({ id }: InputUserId): Promise<User> {
     const user = await this.repository.getById(id);
 
     if (!user) {
