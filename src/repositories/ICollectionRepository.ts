@@ -1,5 +1,6 @@
-import { CollectionRequest } from "../@types/CollectionTypes";
+import { Collections } from "@prisma/client";
+import { CollectionInsertPrisma } from "../@types/CollectionTypes";
 
 export interface ICollectionRepository {
-  insert(data: CollectionRequest): Promise<void>;
+  insert(data: CollectionInsertPrisma): Promise<Collections>;
 }
