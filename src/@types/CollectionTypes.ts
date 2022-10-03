@@ -9,3 +9,7 @@ type RecyclingType = {
 export interface CollectionRequest extends CollectionRequestData {
   types: RecyclingType[];
 }
+
+export interface CollectionResponse extends Collections {
+  types: RecyclingType[];
+}
