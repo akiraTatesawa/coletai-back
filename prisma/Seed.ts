@@ -61,12 +61,23 @@ class Seed implements ISeed {
       });
       console.log(chalk.green("OK!"));
 
-      console.log(chalk.yellow("\n Inserting cooperatives..."));
+      console.log(chalk.yellow("\nInserting cooperatives..."));
       await this.prisma.cooperative.createMany({
         data: [
           this.createCooperative(),
           this.createCooperative(),
           this.createCooperative(),
+        ],
+      });
+      console.log(chalk.green("OK!"));
+
+      console.log(chalk.yellow("\nInserting recycling types..."));
+      await this.prisma.recyclingTypes.createMany({
+        data: [
+          { name: "Plástico" },
+          { name: "Papel" },
+          { name: "Vidro" },
+          { name: "Metal" },
         ],
       });
       console.log(chalk.green("OK!"));

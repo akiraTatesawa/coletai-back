@@ -36,7 +36,7 @@ model Cooperative {
   @@map("cooperatives")
 }
 
-model ReyclingTypes {
+model RecyclingTypes {
   id          String        @id @default(uuid())
   name        String
   created_at  DateTime      @default(now())
@@ -46,16 +46,16 @@ model ReyclingTypes {
 }
 
 model Collections {
-  id            String          @id @default(uuid())
+  id            String           @id @default(uuid())
   userId        String
-  user          User            @relation(fields: [userId], references: [id])
+  user          User             @relation(fields: [userId], references: [id])
   cooperativeId String
-  cooperative   Cooperative     @relation(fields: [cooperativeId], references: [id])
-  is_finished   Boolean         @default(false)
-  is_cancelled  Boolean         @default(false)
-  types         ReyclingTypes[]
-  created_at    DateTime        @default(now())
-  updated_at    DateTime        @updatedAt
+  cooperative   Cooperative      @relation(fields: [cooperativeId], references: [id])
+  is_finished   Boolean          @default(false)
+  is_cancelled  Boolean          @default(false)
+  types         RecyclingTypes[]
+  created_at    DateTime         @default(now())
+  updated_at    DateTime         @updatedAt
 
   @@map("collections")
 }
