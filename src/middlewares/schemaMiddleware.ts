@@ -7,6 +7,7 @@ import {
   createUserSchema as createCooperative,
   loginCooperativeSchema as loginCooperative,
 } from "../schemas/cooperativeSchemas";
+import { collectionSchema as createCollection } from "../schemas/collectionSchemas";
 
 import { CustomError } from "../entities/CustomError";
 
@@ -15,6 +16,7 @@ const Schemas = {
   loginUser,
   createCooperative,
   loginCooperative,
+  createCollection,
 };
 
 type Validator = keyof typeof Schemas;
