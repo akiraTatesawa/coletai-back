@@ -38,7 +38,7 @@ model Cooperative {
 
 model RecyclingTypes {
   id          String        @id @default(uuid())
-  name        String
+  name        String        @unique
   created_at  DateTime      @default(now())
   collections Collections[]
 
