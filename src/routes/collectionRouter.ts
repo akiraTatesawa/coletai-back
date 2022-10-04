@@ -4,6 +4,6 @@ import { createCollectionController } from "../controllers/CollectionControllers
 
 export const collectionRouter = Router();
 
-collectionRouter.post("/create", validateBody("createCollection"), (req, res) =>
+collectionRouter.post("/", validateBody("createCollection"), (req, res) =>
   createCollectionController().handle(req, res)
 );
