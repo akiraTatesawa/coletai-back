@@ -4,4 +4,5 @@ import { CreateUserPrisma } from "../@types/UserTypes";
 export interface IUserRepository {
   insert(userData: CreateUserPrisma): Promise<void>;
   getByEmail(email: string): Promise<User | null>;
+  getById(id: string): Promise<User | null>;
 }
