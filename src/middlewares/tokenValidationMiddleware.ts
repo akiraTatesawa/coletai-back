@@ -18,13 +18,13 @@ export async function validateToken(
   try {
     const jwtUtils = new JWTUtils(process.env.JWT_SECRET);
 
-    const { userId } = (await jwtUtils.verifyToken(
+    const { id } = (await jwtUtils.verifyToken(
       authorization.replace("Bearer ", "")
     )) as {
-      userId: number;
+      id: string;
     };
 
-    res.locals.userId = userId;
+    res.locals.id = id;
 
     return next();
   } catch (error: any) {
