@@ -4,7 +4,7 @@ import { ICollectionRepository } from "../ICollectionRepository";
 
 export class CollectionRepository implements ICollectionRepository {
   async insert(data: CollectionInsertPrisma): Promise<void> {
-    await prisma.collections.create({
+    await prisma.collection.create({
       data: {
         ...data,
         types: {

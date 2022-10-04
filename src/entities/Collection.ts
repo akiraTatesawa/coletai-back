@@ -10,9 +10,17 @@ export class Collection implements CollectionInsertPrisma {
 
   readonly types: RecyclingType[];
 
-  constructor(cooperativeId: string, userId: string, types: RecyclingType[]) {
+  readonly description: string;
+
+  constructor(
+    cooperativeId: string,
+    userId: string,
+    types: RecyclingType[],
+    description: string
+  ) {
     this.cooperativeId = cooperativeId;
     this.userId = userId;
     this.types = [...types];
+    this.description = description;
   }
 }
