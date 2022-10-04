@@ -6,10 +6,14 @@ import { CollectionRequest } from "../../@types/CollectionTypes";
 
 export class CreateCollectionController extends Controller<ICreateCollectionService> {
   async handle(req: Request, res: Response): Promise<void> {
+    const userId: string = res.locals.id;
     const collectionReqData: CollectionRequest = req.body;
 
-    const createdCollection = await this.service.execute(collectionReqData);
+    await this.service.execute({
+      ...collectionReqData,
+      userId,
+    });
 
-    res.status(201).send(createdCollection);
+    res.status(201).send();
   }
 }

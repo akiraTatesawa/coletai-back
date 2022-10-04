@@ -1,6 +1,6 @@
-import { Collections, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { IServiceExecute } from "../../@types/ServiceTypes";
-import { CollectionRequest } from "../../@types/CollectionTypes";
+import { CreateCollectionData } from "../../@types/CollectionTypes";
 import { IValidateUserByIdService } from "../UserServices/ValidateUserByIdService";
 import { IGetCooperativesLocationService } from "../CooperativeServices/GetCooperativesLocationService";
 import { ICollectionRepository } from "../../repositories/ICollectionRepository";
@@ -9,7 +9,7 @@ import { Collection } from "../../entities/Collection";
 import { IValidateTypesService } from "../RecyclingTypesServices/ValidateTypesService";
 
 export interface ICreateCollectionService
-  extends IServiceExecute<CollectionRequest, Collections> {}
+  extends IServiceExecute<CreateCollectionData, void> {}
 
 export class CreateCollectionService implements ICreateCollectionService {
   private validateUserService: IValidateUserByIdService;
@@ -75,7 +75,7 @@ export class CreateCollectionService implements ICreateCollectionService {
     return closestCooperativeId;
   }
 
-  async execute(data: CollectionRequest): Promise<Collections> {
+  async execute(data: CreateCollectionData): Promise<void> {
     const user = await this.validateUserService.execute({ id: data.userId });
     await this.validateTypesService.execute(data.types);
     const cooperatives = await this.getCooperativesLocationService.execute();
@@ -90,6 +90,6 @@ export class CreateCollectionService implements ICreateCollectionService {
       data.types
     );
 
-    return this.repository.insert(newCollection);
+    await this.repository.insert(newCollection);
   }
 }
