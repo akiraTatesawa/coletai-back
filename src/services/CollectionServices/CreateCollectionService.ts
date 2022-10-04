@@ -87,7 +87,8 @@ export class CreateCollectionService implements ICreateCollectionService {
     const newCollection = new Collection(
       closestCooperativeId,
       user.id,
-      data.types
+      data.types,
+      data.description
     );
 
     await this.repository.insert(newCollection);
