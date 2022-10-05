@@ -1,0 +1,28 @@
+import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
+import { MockCooperativeRepository } from "../../repositories/prisma/mocks/MockCooperativeRepository";
+import { CooperativeFactory } from "../../../tests/factories/CooperativeFactory";
+import {
+  GetCooperativesLocationService,
+  IGetCooperativesLocationService,
+} from "./GetCooperativesLocationService";
+
+describe("Get Cooperatives location Service", () => {
+  const repository: ICooperativeRepository = new MockCooperativeRepository();
+  const service: IGetCooperativesLocationService =
+    new GetCooperativesLocationService(repository);
+
+  const cooperativeFactory = new CooperativeFactory();
+
+  it("Should be able to get all cooperatives location service", async () => {
+    const cooperativesLocation =
+      cooperativeFactory.generatePrismaCooperativesLocation();
+
+    jest
+      .spyOn(repository, "getAllCooperativesLocation")
+      .mockResolvedValueOnce(cooperativesLocation);
+
+    await expect(service.execute()).resolves.toEqual(cooperativesLocation);
+
+    expect(repository.getAllCooperativesLocation).toHaveBeenCalledTimes(1);
+  });
+});
