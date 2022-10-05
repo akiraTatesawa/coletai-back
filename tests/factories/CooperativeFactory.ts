@@ -10,6 +10,7 @@ import { PrismaClient, Cooperative as PrismaCooperative } from "@prisma/client";
 import {
   CreateCooperativePrisma,
   LoginCooperative,
+  CooperativeLocation,
 } from "../../src/@types/CooperativeTypes";
 import { Cooperative } from "../../src/entities/Cooperative";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
@@ -85,5 +86,15 @@ export class CooperativeFactory {
       email: randEmail(),
       password: randPassword(),
     };
+  }
+
+  generatePrismaCooperativesLocation(): CooperativeLocation[] {
+    const cooperativeLocation: CooperativeLocation = {
+      id: randUuid(),
+      latitude: randLatitude(),
+      longitude: randLongitude(),
+    };
+
+    return [cooperativeLocation, cooperativeLocation, cooperativeLocation];
   }
 }
