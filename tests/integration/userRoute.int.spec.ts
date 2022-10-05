@@ -6,7 +6,7 @@ import { app } from "../../src/app";
 
 describe("POST /users", () => {
   beforeEach(async () => {
-    await prisma.$executeRaw`TRUNCATE TABLE users`;
+    await prisma.$executeRaw`TRUNCATE TABLE users CASCADE`;
   });
   afterAll(() => {
     prisma.$disconnect();
@@ -44,7 +44,7 @@ describe("POST /users", () => {
 
 describe("POST /users/sign-in", () => {
   beforeEach(async () => {
-    await prisma.$executeRaw`TRUNCATE TABLE users`;
+    await prisma.$executeRaw`TRUNCATE TABLE users CASCADE`;
   });
   afterAll(() => {
     prisma.$disconnect();
