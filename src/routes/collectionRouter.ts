@@ -3,6 +3,7 @@ import { validateBody } from "../middlewares/schemaMiddleware";
 import {
   createCollectionController,
   listCollectionsByUserIdController,
+  listCollectionsByCooperativeIdController,
 } from "../controllers/CollectionControllers/index";
 import { validateToken } from "../middlewares/tokenValidationMiddleware";
 
@@ -16,4 +17,8 @@ collectionRouter.post("/", validateBody("createCollection"), (req, res) =>
 
 collectionRouter.get("/user", (req, res) =>
   listCollectionsByUserIdController().handle(req, res)
+);
+
+collectionRouter.get("/cooperative", (req, res) =>
+  listCollectionsByCooperativeIdController().handle(req, res)
 );

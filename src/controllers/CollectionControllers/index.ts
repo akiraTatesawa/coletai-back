@@ -7,8 +7,9 @@ import { CreateCollectionService } from "../../services/CollectionServices/Creat
 import { CreateCollectionController } from "./CreateCollectionController";
 import { RecyclingTypesRepository } from "../../repositories/prisma/RecyclingTypesRepository";
 import { ValidateTypesService } from "../../services/RecyclingTypesServices/ValidateTypesService";
-import { ListCollectionsByUserIdService } from "../../services/CollectionServices/ListCollectionsByUserIdService";
+import { ListCollectionsByIdService } from "../../services/CollectionServices/ListCollectionsByIdService";
 import { ListCollectionsByUserIdController } from "./ListCollectionsByUserIdController";
+import { ListCollectionsByCooperativeIdController } from "./ListCollectionsByCooperativeIdController";
 
 function setCollectionRepository() {
   return new CollectionRepository();
@@ -40,7 +41,14 @@ export function createCollectionController() {
 
 export function listCollectionsByUserIdController() {
   const collectionRepository = setCollectionRepository();
-  const service = new ListCollectionsByUserIdService(collectionRepository);
+  const service = new ListCollectionsByIdService(collectionRepository);
 
   return new ListCollectionsByUserIdController(service);
+}
+
+export function listCollectionsByCooperativeIdController() {
+  const collectionRepository = setCollectionRepository();
+  const service = new ListCollectionsByIdService(collectionRepository);
+
+  return new ListCollectionsByCooperativeIdController(service);
 }

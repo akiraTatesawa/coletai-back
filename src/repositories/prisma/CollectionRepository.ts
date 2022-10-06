@@ -17,10 +17,13 @@ export class CollectionRepository implements ICollectionRepository {
     });
   }
 
-  async listByUserId(userId: string): Promise<CollectionList[]> {
+  async listByAccountId(
+    params: "cooperativeId" | "userId",
+    id: string
+  ): Promise<CollectionList[]> {
     return prisma.collection.findMany({
       where: {
-        userId,
+        [params]: id,
       },
       orderBy: {
         updated_at: "desc",

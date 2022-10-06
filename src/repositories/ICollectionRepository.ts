@@ -5,5 +5,8 @@ import {
 
 export interface ICollectionRepository {
   insert(data: CollectionInsertPrisma): Promise<void>;
-  listByUserId(userId: string): Promise<CollectionList[]>;
+  listByAccountId(
+    params: "userId" | "cooperativeId",
+    id: string
+  ): Promise<CollectionList[]>;
 }
