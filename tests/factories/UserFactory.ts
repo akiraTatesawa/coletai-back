@@ -10,6 +10,11 @@ import { PrismaClient, User as PrismaUser } from "@prisma/client";
 import { CreateUserPrisma, LoginUser } from "../../src/@types/UserTypes";
 import { User } from "../../src/entities/User";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
+import { JWTUtils } from "../../src/utils/JWTUtils";
+
+interface Header {
+  Authorization: string;
+}
 
 export class UserFactory {
   private cryptUtils: ICryptUtils = new CryptUtils();
@@ -54,9 +59,21 @@ export class UserFactory {
     return { prismaUser, reqUser: data };
   }
 
+  generateUserConfig(userId: string): Header {
+    const token = new JWTUtils(process.env.JWT_SECRET).createToken({
+      id: userId,
+    });
+
+    return {
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
   async createPrismaUser(): Promise<{
     reqUser: CreateUserPrisma;
     loginUser: LoginUser;
+    config: Header;
+    prismaUser: PrismaUser;
   }> {
     const reqUser = this.generateReqSignUpUserData();
     const loginUser: LoginUser = {
@@ -66,11 +83,13 @@ export class UserFactory {
 
     const user = new User(reqUser, this.cryptUtils);
 
-    await this.prisma.user.create({
+    const prismaUser = await this.prisma.user.create({
       data: user,
     });
 
-    return { reqUser, loginUser };
+    const config = this.generateUserConfig(prismaUser.id);
+
+    return { reqUser, loginUser, config, prismaUser };
   }
 
   generateReqLoginUserData(): LoginUser {

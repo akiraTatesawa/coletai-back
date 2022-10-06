@@ -2,16 +2,26 @@ import { randText, randUuid } from "@ngneat/falso";
 import {
   CreateCollectionData,
   CollectionInsertPrisma,
+  CollectionRequest,
 } from "../../src/@types/CollectionTypes";
 import { RecyclingTypesFactory } from "./RecyclingTypesFactory";
 import { Collection } from "../../src/entities/Collection";
 
 export class CollectionFactory {
-  generateValidCollectionReq(): CreateCollectionData {
-    const collectionReq: CreateCollectionData = {
+  generateValidCollectionData(): CreateCollectionData {
+    const collectionData: CreateCollectionData = {
       description: randText(),
       types: new RecyclingTypesFactory().generateValidType(),
       userId: randUuid(),
+    };
+
+    return collectionData;
+  }
+
+  generateValidCollectionReq(): CollectionRequest {
+    const collectionReq: CollectionRequest = {
+      description: randText(),
+      types: new RecyclingTypesFactory().generateValidType(),
     };
 
     return collectionReq;
@@ -22,7 +32,7 @@ export class CollectionFactory {
     collection: CollectionInsertPrisma;
   } {
     const collectionReq: CreateCollectionData =
-      this.generateValidCollectionReq();
+      this.generateValidCollectionData();
 
     const collection: CollectionInsertPrisma = new Collection(
       randUuid(),
