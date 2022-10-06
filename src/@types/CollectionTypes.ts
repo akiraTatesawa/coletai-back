@@ -16,3 +16,15 @@ export interface CollectionRequest {
 export interface CreateCollectionData extends CollectionRequest {
   userId: string;
 }
+
+export interface CollectionList
+  extends Omit<Collection, "cooperativeId" | "userId"> {
+  cooperative: {
+    id: string;
+    name: string;
+  };
+  user: {
+    id: string;
+    name: string;
+  };
+}
