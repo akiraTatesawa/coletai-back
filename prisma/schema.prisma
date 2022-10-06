@@ -52,11 +52,16 @@ model Collection {
   cooperativeId String
   cooperative   Cooperative      @relation(fields: [cooperativeId], references: [id])
   description   String
-  is_finished   Boolean          @default(false)
-  is_cancelled  Boolean          @default(false)
+  status        CollectionStatus @default(ongoing)
   types         RecyclingTypes[]
   created_at    DateTime         @default(now())
   updated_at    DateTime         @updatedAt
 
   @@map("collections")
+}
+
+enum CollectionStatus {
+  ongoing
+  finished
+  cancelled
 }
