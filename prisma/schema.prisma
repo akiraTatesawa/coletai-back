@@ -52,7 +52,7 @@ model Collection {
   cooperativeId String
   cooperative   Cooperative      @relation(fields: [cooperativeId], references: [id])
   description   String
-  status        CollectionStatus
+  status        CollectionStatus @default(ongoing)
   types         RecyclingTypes[]
   created_at    DateTime         @default(now())
   updated_at    DateTime         @updatedAt
