@@ -8,4 +8,6 @@ export class MockCollectionRepository implements ICollectionRepository {
   cancelCollection = jest.fn();
 
   listById = jest.fn();
+
+  finishCollection = jest.fn();
 }

@@ -74,4 +74,15 @@ export class CollectionRepository implements ICollectionRepository {
       },
     });
   }
+
+  async finishCollection(id: string): Promise<void> {
+    await prisma.collection.update({
+      where: {
+        id,
+      },
+      data: {
+        status: "finished",
+      },
+    });
+  }
 }
