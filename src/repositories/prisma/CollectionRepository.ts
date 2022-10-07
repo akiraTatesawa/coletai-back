@@ -54,4 +54,15 @@ export class CollectionRepository implements ICollectionRepository {
       },
     });
   }
+
+  async cancelCollection(id: string): Promise<void> {
+    await prisma.collection.update({
+      where: {
+        id,
+      },
+      data: {
+        status: "cancelled",
+      },
+    });
+  }
 }

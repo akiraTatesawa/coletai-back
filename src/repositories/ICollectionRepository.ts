@@ -9,4 +9,5 @@ export interface ICollectionRepository {
     params: "userId" | "cooperativeId",
     id: string
   ): Promise<CollectionList[]>;
+  cancelCollection(id: string): Promise<void>;
 }
