@@ -5,6 +5,7 @@ import {
   listCollectionsByUserIdController,
   listCollectionsByCooperativeIdController,
   cancelCollectionController,
+  finishCollectionController,
 } from "../controllers/CollectionControllers/index";
 import { validateToken } from "../middlewares/tokenValidationMiddleware";
 
@@ -26,4 +27,8 @@ collectionRouter.get("/cooperative", (req, res) =>
 
 collectionRouter.patch("/:id/cancel", (req, res) =>
   cancelCollectionController().handle(req, res)
+);
+
+collectionRouter.patch("/:id/finish", (req, res) =>
+  finishCollectionController().handle(req, res)
 );

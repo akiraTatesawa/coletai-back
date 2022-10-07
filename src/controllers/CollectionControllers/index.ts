@@ -12,6 +12,8 @@ import { ListCollectionsByUserIdController } from "./ListCollectionsByUserIdCont
 import { ListCollectionsByCooperativeIdController } from "./ListCollectionsByCooperativeIdController";
 import { CancelCollectionService } from "../../services/CollectionServices/CancelCollectionService";
 import { CancelCollectionController } from "./CancelCollectionController";
+import { FinishCollectionService } from "../../services/CollectionServices/FinishCollectionService";
+import { FinishCollectionController } from "./FinishCollectionController";
 
 function setCollectionRepository() {
   return new CollectionRepository();
@@ -60,4 +62,11 @@ export function cancelCollectionController() {
   const service = new CancelCollectionService(collectionRepository);
 
   return new CancelCollectionController(service);
+}
+
+export function finishCollectionController() {
+  const collectionRepository = setCollectionRepository();
+  const service = new FinishCollectionService(collectionRepository);
+
+  return new FinishCollectionController(service);
 }
