@@ -27,4 +27,7 @@ export interface CollectionList
     id: string;
     name: string;
   };
+  types: {
+    name: string;
+  }[];
 }

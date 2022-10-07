@@ -46,6 +46,11 @@ export class CollectionRepository implements ICollectionRepository {
             name: true,
           },
         },
+        types: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   }
