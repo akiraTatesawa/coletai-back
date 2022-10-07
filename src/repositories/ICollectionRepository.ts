@@ -1,3 +1,4 @@
+import { Collection } from "@prisma/client";
 import {
   CollectionInsertPrisma,
   CollectionList,
@@ -5,8 +6,10 @@ import {
 
 export interface ICollectionRepository {
   insert(data: CollectionInsertPrisma): Promise<void>;
-  listByAccountId(
+  listAllByAccountId(
     params: "userId" | "cooperativeId",
     id: string
   ): Promise<CollectionList[]>;
+  cancelCollection(id: string): Promise<void>;
+  listById(id: string): Promise<Collection | null>;
 }
