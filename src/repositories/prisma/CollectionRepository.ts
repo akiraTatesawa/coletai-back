@@ -1,3 +1,4 @@
+import { Collection } from "@prisma/client";
 import {
   CollectionInsertPrisma,
   CollectionList,
@@ -17,7 +18,15 @@ export class CollectionRepository implements ICollectionRepository {
     });
   }
 
-  async listByAccountId(
+  async listById(id: string): Promise<Collection | null> {
+    return prisma.collection.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async listAllByAccountId(
     params: "cooperativeId" | "userId",
     id: string
   ): Promise<CollectionList[]> {

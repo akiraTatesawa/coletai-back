@@ -18,7 +18,7 @@ export class ListCollectionsByIdService implements IListCollectionsByIdService {
   }
 
   async execute({ params, id }: ServiceInput): Promise<CollectionList[]> {
-    const collections = await this.repository.listByAccountId(params, id);
+    const collections = await this.repository.listAllByAccountId(params, id);
 
     return collections;
   }
