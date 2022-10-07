@@ -11,5 +11,6 @@ export interface ICollectionRepository {
     id: string
   ): Promise<CollectionList[]>;
   cancelCollection(id: string): Promise<void>;
+  finishCollection(id: string): Promise<void>;
   listById(id: string): Promise<Collection | null>;
 }

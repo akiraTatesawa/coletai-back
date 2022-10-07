@@ -8,8 +8,6 @@ export class ListCollectionsByCooperativeIdController extends Controller<IListCo
   async handle(req: Request, res: Response): Promise<void> {
     const { id } = res.locals as { id: string };
 
-    console.log(id);
-
     const collections = await this.service.execute({
       params: "cooperativeId",
       id,
