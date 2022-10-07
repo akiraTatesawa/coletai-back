@@ -26,6 +26,12 @@ export class CancelCollectionService implements ICancelCollection {
     if (!collection) {
       throw new CustomError("error_not_found", "Collection not found");
     }
+    if (collection.cooperativeId !== cooperativeId) {
+      throw new CustomError(
+        "error_forbidden",
+        "You don't have permission to cancel this collection"
+      );
+    }
     if (collection.status === "cancelled") {
       throw new CustomError(
         "error_bad_request",
@@ -36,12 +42,6 @@ export class CancelCollectionService implements ICancelCollection {
       throw new CustomError(
         "error_bad_request",
         "This collection is already finished"
-      );
-    }
-    if (collection.cooperativeId !== cooperativeId) {
-      throw new CustomError(
-        "error_forbidden",
-        "You don't have permission to cancel this collection"
       );
     }
 
