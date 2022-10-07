@@ -6,11 +6,12 @@ import {
   randLongitude,
   randUuid,
 } from "@ngneat/falso";
-import { PrismaClient, User as PrismaUser } from "@prisma/client";
+import { User as PrismaUser } from "@prisma/client";
 import { CreateUserPrisma, LoginUser } from "../../src/@types/UserTypes";
 import { User } from "../../src/entities/User";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
 import { JWTUtils } from "../../src/utils/JWTUtils";
+import { prisma } from "../../src/database/prisma";
 
 interface Header {
   Authorization: string;
@@ -18,8 +19,6 @@ interface Header {
 
 export class UserFactory {
   private cryptUtils: ICryptUtils = new CryptUtils();
-
-  private prisma: PrismaClient = new PrismaClient();
 
   generateReqSignUpUserData(): CreateUserPrisma {
     const data: CreateUserPrisma = {
@@ -83,7 +82,7 @@ export class UserFactory {
 
     const user = new User(reqUser, this.cryptUtils);
 
-    const prismaUser = await this.prisma.user.create({
+    const prismaUser = await prisma.user.create({
       data: user,
     });
 

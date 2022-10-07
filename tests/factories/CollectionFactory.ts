@@ -1,4 +1,5 @@
-import { randText, randUuid } from "@ngneat/falso";
+import { randText, randUuid, randPastDate } from "@ngneat/falso";
+import { Collection as PrismaCollection } from "@prisma/client";
 import {
   CreateCollectionData,
   CollectionInsertPrisma,
@@ -6,6 +7,7 @@ import {
 } from "../../src/@types/CollectionTypes";
 import { RecyclingTypesFactory } from "./RecyclingTypesFactory";
 import { Collection } from "../../src/entities/Collection";
+import { prisma } from "../../src/database/prisma";
 
 export class CollectionFactory {
   generateValidCollectionData(): CreateCollectionData {
@@ -42,5 +44,32 @@ export class CollectionFactory {
     );
 
     return { collectionReq, collection };
+  }
+
+  generateCollectionFromPrisma({
+    ...props
+  }: Partial<PrismaCollection>): PrismaCollection {
+    const prismaCollection: PrismaCollection = {
+      id: randUuid(),
+      cooperativeId: randUuid(),
+      userId: randUuid(),
+      description: randText(),
+      status: "ongoing",
+      created_at: randPastDate(),
+      updated_at: randPastDate(),
+      ...props,
+    };
+
+    return prismaCollection;
+  }
+
+  async createCollection({
+    ...props
+  }: Partial<PrismaCollection>): Promise<PrismaCollection> {
+    const collection: PrismaCollection = await prisma.collection.create({
+      data: { ...this.generateCollectionFromPrisma({ ...props }) },
+    });
+
+    return collection;
   }
 }

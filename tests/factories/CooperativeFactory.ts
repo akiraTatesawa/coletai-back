@@ -6,7 +6,7 @@ import {
   randUuid,
   randCompanyName,
 } from "@ngneat/falso";
-import { PrismaClient, Cooperative as PrismaCooperative } from "@prisma/client";
+import { Cooperative as PrismaCooperative } from "@prisma/client";
 import {
   CreateCooperativePrisma,
   LoginCooperative,
@@ -14,11 +14,11 @@ import {
 } from "../../src/@types/CooperativeTypes";
 import { Cooperative } from "../../src/entities/Cooperative";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
+import { JWTUtils } from "../../src/utils/JWTUtils";
+import { prisma } from "../../src/database/prisma";
 
 export class CooperativeFactory {
   private cryptUtils: ICryptUtils = new CryptUtils();
-
-  private prisma: PrismaClient = new PrismaClient();
 
   generateReqSignUpCooperativeData(): CreateCooperativePrisma {
     const data: CreateCooperativePrisma = {
@@ -62,9 +62,23 @@ export class CooperativeFactory {
     return { prismaCooperative, reqCooperative: data };
   }
 
+  generateCooperativeToken(id: string) {
+    const token = new JWTUtils(process.env.JWT_SECRET).createToken({
+      id,
+    });
+
+    return {
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
   async createPrismaCooperative(): Promise<{
     reqLogin: LoginCooperative;
     reqCooperative: CreateCooperativePrisma;
+    token: {
+      Authorization: string;
+    };
+    prismaCooperative: PrismaCooperative;
   }> {
     const reqCooperative = this.generateReqSignUpCooperativeData();
     const reqLogin: LoginCooperative = {
@@ -74,11 +88,13 @@ export class CooperativeFactory {
 
     const cooperative = new Cooperative(reqCooperative, this.cryptUtils);
 
-    await this.prisma.cooperative.create({
+    const prismaCooperative = await prisma.cooperative.create({
       data: cooperative,
     });
 
-    return { reqLogin, reqCooperative };
+    const token = this.generateCooperativeToken(prismaCooperative.id);
+
+    return { reqLogin, reqCooperative, token, prismaCooperative };
   }
 
   generateLoginCooperativeData(): LoginCooperative {
