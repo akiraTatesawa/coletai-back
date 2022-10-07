@@ -7,6 +7,7 @@ import {
 } from "../../src/@types/CollectionTypes";
 import { RecyclingTypesFactory } from "./RecyclingTypesFactory";
 import { Collection } from "../../src/entities/Collection";
+import { prisma } from "../../src/database/prisma";
 
 export class CollectionFactory {
   generateValidCollectionData(): CreateCollectionData {
@@ -60,5 +61,15 @@ export class CollectionFactory {
     };
 
     return prismaCollection;
+  }
+
+  async createCollection({
+    ...props
+  }: Partial<PrismaCollection>): Promise<PrismaCollection> {
+    const collection: PrismaCollection = await prisma.collection.create({
+      data: { ...this.generateCollectionFromPrisma({ ...props }) },
+    });
+
+    return collection;
   }
 }
