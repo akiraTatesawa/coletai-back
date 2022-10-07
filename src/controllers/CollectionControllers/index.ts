@@ -10,6 +10,8 @@ import { ValidateTypesService } from "../../services/RecyclingTypesServices/Vali
 import { ListCollectionsByIdService } from "../../services/CollectionServices/ListCollectionsByIdService";
 import { ListCollectionsByUserIdController } from "./ListCollectionsByUserIdController";
 import { ListCollectionsByCooperativeIdController } from "./ListCollectionsByCooperativeIdController";
+import { CancelCollectionService } from "../../services/CollectionServices/CancelCollectionService";
+import { CancelCollectionController } from "./CancelCollectionController";
 
 function setCollectionRepository() {
   return new CollectionRepository();
@@ -51,4 +53,11 @@ export function listCollectionsByCooperativeIdController() {
   const service = new ListCollectionsByIdService(collectionRepository);
 
   return new ListCollectionsByCooperativeIdController(service);
+}
+
+export function cancelCollectionController() {
+  const collectionRepository = setCollectionRepository();
+  const service = new CancelCollectionService(collectionRepository);
+
+  return new CancelCollectionController(service);
 }
