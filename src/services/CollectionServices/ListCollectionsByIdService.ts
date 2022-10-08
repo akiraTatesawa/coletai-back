@@ -2,7 +2,7 @@ import { CollectionList } from "../../@types/CollectionTypes";
 import { IServiceExecute } from "../../@types/ServiceTypes";
 import { ICollectionRepository } from "../../repositories/ICollectionRepository";
 
-interface ServiceInput {
+export interface ServiceInput {
   params: "userId" | "cooperativeId";
   id: string;
 }
