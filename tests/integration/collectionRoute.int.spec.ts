@@ -208,3 +208,94 @@ describe("PATCH /collections/:id/cancel", () => {
     );
   });
 });
+
+describe("PATCH /collections/:id/finish", () => {
+  beforeEach(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE users CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE cooperatives CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE collections CASCADE`;
+  });
+  afterAll(() => {
+    prisma.$disconnect();
+  });
+
+  it("200: Should be able to finish a collection", async () => {
+    const { prismaUser } = await new UserFactory().createPrismaUser();
+    const { prismaCooperative, token } =
+      await new CooperativeFactory().createPrismaCooperative();
+    const { id } = await new CollectionFactory().createCollection({
+      userId: prismaUser.id,
+      cooperativeId: prismaCooperative.id,
+    });
+
+    const result = await request(app)
+      .patch(`/collections/${id}/finish`)
+      .set(token);
+
+    expect(result.status).toEqual(200);
+    expect(result.body).toEqual({});
+  });
+
+  it("403: Should not be able to cancel a collection if it does not belong to the cooperative", async () => {
+    const { prismaUser } = await new UserFactory().createPrismaUser();
+    const { token } = await new CooperativeFactory().createPrismaCooperative();
+    const { prismaCooperative } =
+      await new CooperativeFactory().createPrismaCooperative();
+    const { id } = await new CollectionFactory().createCollection({
+      userId: prismaUser.id,
+      cooperativeId: prismaCooperative.id,
+    });
+
+    const result = await request(app)
+      .patch(`/collections/${id}/finish`)
+      .set(token);
+
+    expect(result.status).toEqual(403);
+    expect(result.body).toHaveProperty(
+      "message",
+      "You don't have permission to finish this collection"
+    );
+  });
+
+  it("400: Should not be able to finish a collection if its already cancelled", async () => {
+    const { prismaUser } = await new UserFactory().createPrismaUser();
+    const { prismaCooperative, token } =
+      await new CooperativeFactory().createPrismaCooperative();
+    const { id } = await new CollectionFactory().createCollection({
+      userId: prismaUser.id,
+      cooperativeId: prismaCooperative.id,
+      status: "cancelled",
+    });
+
+    const result = await request(app)
+      .patch(`/collections/${id}/finish`)
+      .set(token);
+
+    expect(result.status).toEqual(400);
+    expect(result.body).toHaveProperty(
+      "message",
+      "This collection is already cancelled"
+    );
+  });
+
+  it("400: Should not be able to finish a collection if its already finished", async () => {
+    const { prismaUser } = await new UserFactory().createPrismaUser();
+    const { prismaCooperative, token } =
+      await new CooperativeFactory().createPrismaCooperative();
+    const { id } = await new CollectionFactory().createCollection({
+      userId: prismaUser.id,
+      cooperativeId: prismaCooperative.id,
+      status: "finished",
+    });
+
+    const result = await request(app)
+      .patch(`/collections/${id}/finish`)
+      .set(token);
+
+    expect(result.status).toEqual(400);
+    expect(result.body).toHaveProperty(
+      "message",
+      "This collection is already finished"
+    );
+  });
+});
