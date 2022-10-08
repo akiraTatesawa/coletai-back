@@ -299,3 +299,66 @@ describe("PATCH /collections/:id/finish", () => {
     );
   });
 });
+
+describe("GET /collections/user", () => {
+  beforeEach(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE users CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE cooperatives CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE collections CASCADE`;
+  });
+  afterAll(() => {
+    prisma.$disconnect();
+  });
+
+  it("200: Should be able to get all user collections", async () => {
+    const { prismaUser, config } = await new UserFactory().createPrismaUser();
+    const { prismaCooperative } =
+      await new CooperativeFactory().createPrismaCooperative();
+    const collection = await new CollectionFactory().createCollection({
+      userId: prismaUser.id,
+      cooperativeId: prismaCooperative.id,
+    });
+
+    const result = await request(app).get("/collections/user").set(config);
+
+    expect(result.status).toEqual(200);
+    expect(result.body).toHaveLength(1);
+    expect(result.body[0]).toHaveProperty("user.id", collection.userId);
+    expect(result.body[0]).toHaveProperty(
+      "cooperative.id",
+      collection.cooperativeId
+    );
+  });
+});
+describe("GET /collections/cooperative", () => {
+  beforeEach(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE users CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE cooperatives CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE collections CASCADE`;
+  });
+  afterAll(() => {
+    prisma.$disconnect();
+  });
+
+  it("Should be able to get all cooperative collections", async () => {
+    const { prismaUser } = await new UserFactory().createPrismaUser();
+    const { prismaCooperative, token: config } =
+      await new CooperativeFactory().createPrismaCooperative();
+    const collection = await new CollectionFactory().createCollection({
+      userId: prismaUser.id,
+      cooperativeId: prismaCooperative.id,
+    });
+
+    const result = await request(app)
+      .get("/collections/cooperative")
+      .set(config);
+
+    expect(result.status).toEqual(200);
+    expect(result.body).toHaveLength(1);
+    expect(result.body[0]).toHaveProperty("user.id", collection.userId);
+    expect(result.body[0]).toHaveProperty(
+      "cooperative.id",
+      collection.cooperativeId
+    );
+  });
+});
