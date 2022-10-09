@@ -105,3 +105,28 @@ describe("POST /cooperatives/sign-in", () => {
     expect(result.body).toHaveProperty("name", "Unauthorized");
   });
 });
+
+describe("GET /cooperatives/name-location", () => {
+  beforeEach(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE cooperatives CASCADE`;
+  });
+  afterAll(() => {
+    prisma.$disconnect();
+  });
+
+  it("200: Should be able to get all cooperatives names and locations", async () => {
+    const factory = new CooperativeFactory();
+    const cooperativesPromise = [
+      factory.createPrismaCooperative(),
+      factory.createPrismaCooperative(),
+    ];
+
+    await Promise.all(cooperativesPromise);
+
+    const result = await request(app).get("/cooperatives/name-location");
+
+    expect(result.status).toEqual(200);
+    expect(result.body).toHaveLength(2);
+    expect(result.body[0]).toHaveProperty("name");
+  });
+});

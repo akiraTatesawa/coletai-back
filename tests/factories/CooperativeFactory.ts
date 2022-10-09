@@ -11,6 +11,7 @@ import {
   CreateCooperativePrisma,
   LoginCooperative,
   CooperativeLocation,
+  CooperativeLocationName,
 } from "../../src/@types/CooperativeTypes";
 import { Cooperative } from "../../src/entities/Cooperative";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
@@ -112,5 +113,15 @@ export class CooperativeFactory {
     };
 
     return [cooperativeLocation, cooperativeLocation, cooperativeLocation];
+  }
+
+  generatePrismaCooperativesNamesLocations(): CooperativeLocationName[] {
+    const cooperative: CooperativeLocationName = {
+      name: randCompanyName(),
+      latitude: randLatitude(),
+      longitude: randLongitude(),
+    };
+
+    return [cooperative, cooperative, cooperative];
   }
 }

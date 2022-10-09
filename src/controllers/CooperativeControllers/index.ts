@@ -6,7 +6,7 @@ import { LoginCooperativeService } from "../../services/CooperativeServices/Logi
 import { JWTUtils } from "../../utils/JWTUtils";
 import { LoginCooperativeController } from "./LoginCooperativeController";
 import { GetAllCooperativesNameController } from "./GetAllCooperativesNameController";
-import { GetAllCooperativesNameService } from "../../services/CooperativeServices/GetAllCooperativesName";
+import { GetAllCooperativesNameService } from "../../services/CooperativeServices/GetAllCooperativesNameService";
 
 function getCooperativeRepo() {
   return new CooperativeRepository();
