@@ -5,6 +5,8 @@ import { CreateCooperativeController } from "./CreateCooperativeController";
 import { LoginCooperativeService } from "../../services/CooperativeServices/LoginCooperativeService";
 import { JWTUtils } from "../../utils/JWTUtils";
 import { LoginCooperativeController } from "./LoginCooperativeController";
+import { GetAllCooperativesNameController } from "./GetAllCooperativesNameController";
+import { GetAllCooperativesNameService } from "../../services/CooperativeServices/GetAllCooperativesName";
 
 function getCooperativeRepo() {
   return new CooperativeRepository();
@@ -33,4 +35,11 @@ export function loginCooperativeController() {
   const controller = new LoginCooperativeController(service);
 
   return controller;
+}
+
+export function getAllCooperativesNameController() {
+  const repository = getCooperativeRepo();
+  const service = new GetAllCooperativesNameService(repository);
+
+  return new GetAllCooperativesNameController(service);
 }

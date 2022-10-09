@@ -1,6 +1,7 @@
 import { Cooperative } from "@prisma/client";
 import {
   CooperativeLocation,
+  CooperativeLocationName,
   CreateCooperativePrisma,
 } from "../../@types/CooperativeTypes";
 import { prisma } from "../../database/prisma";
@@ -36,6 +37,19 @@ export class CooperativeRepository implements ICooperativeRepository {
           id: true,
           latitude: true,
           longitude: true,
+        },
+      });
+
+    return cooperatives;
+  }
+
+  async getAllCooperatives(): Promise<CooperativeLocationName[]> {
+    const cooperatives: CooperativeLocationName[] =
+      await prisma.cooperative.findMany({
+        select: {
+          name: true,
+          longitude: true,
+          latitude: true,
         },
       });
 
