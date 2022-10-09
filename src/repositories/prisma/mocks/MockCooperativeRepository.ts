@@ -8,4 +8,6 @@ export class MockCooperativeRepository implements ICooperativeRepository {
   insert = jest.fn();
 
   getAllCooperativesLocation = jest.fn();
+
+  getAllCooperatives = jest.fn();
 }

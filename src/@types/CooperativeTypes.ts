@@ -8,3 +8,8 @@ export type CooperativeLocation = Pick<
   Cooperative,
   "id" | "latitude" | "longitude"
 >;
+
+export type CooperativeLocationName = Pick<
+  Cooperative,
+  "name" | "latitude" | "longitude"
+>;
