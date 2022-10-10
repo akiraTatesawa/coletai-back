@@ -343,10 +343,6 @@ GET /collections/user
 ]
 ```
 
-| `empty`          |   `201`    | **Created**          |
-| `json`           |   `404`    | **Not Found**, the recycling type does not exist |
-| `json`           |   `422`    | **Unprocessable Entity**, request body is invalid |
-
 #### List Collections by Cooperative
 
 ```http
