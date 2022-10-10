@@ -1,0 +1,28 @@
+{
+    "client": "Thunder Client",
+    "environmentName": "ColetAí DEV env",
+    "dateExported": "2022-10-10T14:20:25.755Z",
+    "version": "1.0",
+    "variables": [
+        {
+            "name": "URL",
+            "value": ""
+        },
+        {
+            "name": "userToken",
+            "value": ""
+        },
+        {
+            "name": "cooperativeToken",
+            "value": ""
+        },
+        {
+            "name": "cancelCollectionId",
+            "value": ""
+        },
+        {
+            "name": "finishCollectionId",
+            "value": ""
+        }
+    ]
+}
