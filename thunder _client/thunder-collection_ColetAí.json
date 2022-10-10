@@ -1,0 +1,404 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "ColetAí",
+    "dateExported": "2022-10-10T14:20:12.559Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "91831b6d-9490-4295-aac8-3339d1682af7",
+            "name": "User",
+            "containerId": "",
+            "created": "2022-09-27T17:56:57.731Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "8cdf97ae-110f-4125-b08f-63ce898e02ae",
+            "name": "Cooperative",
+            "containerId": "",
+            "created": "2022-09-27T18:30:23.728Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "4737463d-ae3a-4915-9266-afe631fa54b9",
+            "name": "Collection",
+            "containerId": "",
+            "created": "2022-10-03T23:20:08.936Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "de98d5aa-3a8b-4aa7-b4d6-be0a46ff7df2",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "91831b6d-9490-4295-aac8-3339d1682af7",
+            "name": "Create User",
+            "url": "{{URL}}/users",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2022-09-27T17:57:08.207Z",
+            "modified": "2022-10-10T14:09:39.060Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Random\",\n  \"email\": \"random@gmail.com\",\n  \"password\": \"pass123\",\n  \"latitude\": -50,\n  \"longitude\": -90\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "201"
+                }
+            ]
+        },
+        {
+            "_id": "77595525-4167-41f7-a334-7133bb490f1c",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "8cdf97ae-110f-4125-b08f-63ce898e02ae",
+            "name": "Create Cooperative",
+            "url": "{{URL}}/cooperatives",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2022-09-27T18:30:40.344Z",
+            "modified": "2022-10-10T14:10:44.691Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Random\",\n  \"email\": \"randomcoop@gmail.com\",\n  \"password\": \"pass123\",\n  \"latitude\": -50,\n  \"longitude\": -90\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "201"
+                }
+            ]
+        },
+        {
+            "_id": "865c8893-3ce7-4687-8132-68a7ef25eeee",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "91831b6d-9490-4295-aac8-3339d1682af7",
+            "name": "Login User",
+            "url": "{{URL}}/users/sign-in",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2022-09-29T20:00:09.732Z",
+            "modified": "2022-10-10T14:10:13.280Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"random@gmail.com\",\n  \"password\": \"pass123\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{userToken}}"
+                },
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "res-body",
+                    "custom": "",
+                    "action": "isjson",
+                    "value": "true"
+                }
+            ]
+        },
+        {
+            "_id": "986a6280-11d5-4cef-b50d-8ed04a89bb0a",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "8cdf97ae-110f-4125-b08f-63ce898e02ae",
+            "name": "Login Cooperative",
+            "url": "{{URL}}/cooperatives/sign-in",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2022-09-29T23:10:47.268Z",
+            "modified": "2022-10-10T14:10:59.923Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"randomcoop@gmail.com\",\n  \"password\": \"pass123\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{cooperativeToken}}"
+                },
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "res-body",
+                    "custom": "",
+                    "action": "isjson",
+                    "value": "true"
+                }
+            ]
+        },
+        {
+            "_id": "d9561b94-c889-445b-9944-3201833efe84",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "4737463d-ae3a-4915-9266-afe631fa54b9",
+            "name": "Create Collection",
+            "url": "{{URL}}/collections",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2022-10-03T23:20:14.303Z",
+            "modified": "2022-10-10T14:16:34.688Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"types\": [\n    {\n      \"name\": \"Metal\"\n    }\n  ],\n  \"description\": \"Random description\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{userToken}}"
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "201"
+                }
+            ]
+        },
+        {
+            "_id": "d5262d7e-5d90-492a-a97f-095d22fb29e4",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "4737463d-ae3a-4915-9266-afe631fa54b9",
+            "name": "Create Collection to be finished",
+            "url": "{{URL}}/collections",
+            "method": "POST",
+            "sortNum": 52500,
+            "created": "2022-10-10T14:14:41.380Z",
+            "modified": "2022-10-10T14:16:32.463Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"types\": [\n    {\n      \"name\": \"Metal\"\n    },\n    {\n      \"name\": \"Vidro\"\n    }\n  ],\n  \"description\": \"Random description\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{userToken}}"
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "201"
+                }
+            ]
+        },
+        {
+            "_id": "4334d4eb-24a8-40d5-9df2-53e8e0bfde80",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "4737463d-ae3a-4915-9266-afe631fa54b9",
+            "name": "List Collections by user id",
+            "url": "{{URL}}/collections/user",
+            "method": "GET",
+            "sortNum": 55000,
+            "created": "2022-10-06T16:49:40.710Z",
+            "modified": "2022-10-10T14:18:12.648Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{userToken}}"
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "res-body",
+                    "custom": "",
+                    "action": "isjson",
+                    "value": "true"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json[0].id",
+                    "action": "setto",
+                    "value": "{{cancelCollectionId}}"
+                },
+                {
+                    "type": "set-env-var",
+                    "custom": "json[1].id",
+                    "action": "setto",
+                    "value": "{{finishCollectionId}}"
+                }
+            ]
+        },
+        {
+            "_id": "8e5b83fc-48eb-4e8c-bdba-64546ac1409f",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "4737463d-ae3a-4915-9266-afe631fa54b9",
+            "name": "List Coolections by cooperative id",
+            "url": "{{URL}}/collections/cooperative",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2022-10-06T17:09:39.258Z",
+            "modified": "2022-10-10T14:12:18.099Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{cooperativeToken}}"
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "res-body",
+                    "custom": "",
+                    "action": "isjson",
+                    "value": "true"
+                }
+            ]
+        },
+        {
+            "_id": "8fa7f9ca-a668-44af-8244-829c947ff5f7",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "4737463d-ae3a-4915-9266-afe631fa54b9",
+            "name": "Cancel Collection",
+            "url": "{{URL}}/collections/{id}/cancel",
+            "method": "PATCH",
+            "sortNum": 80000,
+            "created": "2022-10-07T01:25:29.204Z",
+            "modified": "2022-10-10T14:18:29.352Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "{{cancelCollectionId}}",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{cooperativeToken}}"
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "7e1a946a-1213-4df1-b0b4-869dfaacf662",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "4737463d-ae3a-4915-9266-afe631fa54b9",
+            "name": "Finish Collection",
+            "url": "{{URL}}/collections/{id}/finish",
+            "method": "PATCH",
+            "sortNum": 90000,
+            "created": "2022-10-07T16:39:46.195Z",
+            "modified": "2022-10-10T14:18:38.746Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "{{finishCollectionId}}",
+                    "isPath": true
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{cooperativeToken}}"
+            },
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "3711df1e-4173-4e96-aa57-82494319b415",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "",
+            "name": "E2EReset",
+            "url": "{{URL}}/reset-database",
+            "method": "DELETE",
+            "sortNum": 100000,
+            "created": "2022-10-08T15:00:30.356Z",
+            "modified": "2022-10-10T14:13:53.978Z",
+            "headers": [],
+            "params": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                }
+            ]
+        },
+        {
+            "_id": "1143cdb3-5cd7-4b94-8e4f-8d2986eabd8d",
+            "colId": "a11f8776-cf3e-4442-b16b-abd7bcc6fd17",
+            "containerId": "8cdf97ae-110f-4125-b08f-63ce898e02ae",
+            "name": "Get Cooperatives names and locations",
+            "url": "{{URL}}/cooperatives/name-location",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2022-10-09T01:03:41.419Z",
+            "modified": "2022-10-10T14:11:37.424Z",
+            "headers": [],
+            "params": [],
+            "tests": [
+                {
+                    "type": "res-code",
+                    "custom": "",
+                    "action": "equal",
+                    "value": "200"
+                },
+                {
+                    "type": "res-body",
+                    "custom": "",
+                    "action": "isjson",
+                    "value": "true"
+                }
+            ]
+        }
+    ],
+    "settings": {}
+}
