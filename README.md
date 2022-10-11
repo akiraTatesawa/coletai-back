@@ -312,7 +312,8 @@ GET /collections/user
     },
     "user": {
       "id": "2d298149-014b-4b1d-90bd-abf9a77fa942",
-      "name": "Random"
+      "name": "Random",
+      "address": "user address"
     },
     "types": [
       {
@@ -332,7 +333,8 @@ GET /collections/user
     },
     "user": {
       "id": "2d298149-014b-4b1d-90bd-abf9a77fa942",
-      "name": "Random"
+      "name": "Random",
+      "address": "user address"
     },
     "types": [
       {
@@ -369,7 +371,8 @@ GET /collections/cooperative
     },
     "user": {
       "id": "2d298149-014b-4b1d-90bd-abf9a77fa942",
-      "name": "Random"
+      "name": "Random",
+      "address": "user address"
     },
     "types": [
       {
@@ -389,7 +392,8 @@ GET /collections/cooperative
     },
     "user": {
       "id": "2d298149-014b-4b1d-90bd-abf9a77fa942",
-      "name": "Random"
+      "name": "Random",
+      "address": "user address"
     },
     "types": [
       {
