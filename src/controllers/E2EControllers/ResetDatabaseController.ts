@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
 import { Controller } from "../../@types/ControllerTypes";
-import { IResetDatabase } from "../../services/E2EServices/ResetDatabaseService";
+import { ResetDatabaseService } from "../../services/E2EServices/ResetDatabaseService";
 
-export class ResetDatabaseController extends Controller<IResetDatabase> {
+export class ResetDatabaseController extends Controller<ResetDatabaseService> {
   async handle(req: Request, res: Response): Promise<void> {
     await this.service.execute();
 

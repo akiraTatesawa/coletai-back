@@ -1,7 +1,7 @@
 import { MockUserRepository } from "../../repositories/prisma/mocks/MockUserRepository";
 import {
   ValidateUserByIdService,
-  IValidateUserByIdService,
+  ValidateUserByIdServiceImpl,
 } from "./ValidateUserByIdService";
 import { UserFactory } from "../../../tests/factories/UserFactory";
 import { IUserRepository } from "../../repositories/IUserRepository";
@@ -9,7 +9,7 @@ import { CustomError } from "../../entities/CustomError";
 
 describe("Validate User By Id Service", () => {
   const repository: IUserRepository = new MockUserRepository();
-  const service: IValidateUserByIdService = new ValidateUserByIdService(
+  const service: ValidateUserByIdService = new ValidateUserByIdServiceImpl(
     repository
   );
   const factory = new UserFactory();

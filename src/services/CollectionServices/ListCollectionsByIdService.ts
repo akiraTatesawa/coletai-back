@@ -7,10 +7,12 @@ export interface ServiceInput {
   id: string;
 }
 
-export interface IListCollectionsByIdService
+export interface ListCollectionsByIdService
   extends IServiceExecute<ServiceInput, CollectionList[]> {}
 
-export class ListCollectionsByIdService implements IListCollectionsByIdService {
+export class ListCollectionsByIdServiceImpl
+  implements ListCollectionsByIdService
+{
   private repository: ICollectionRepository;
 
   constructor(repository: ICollectionRepository) {

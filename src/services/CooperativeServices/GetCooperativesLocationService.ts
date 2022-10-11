@@ -2,11 +2,11 @@ import { IServiceExecute } from "../../@types/ServiceTypes";
 import { CooperativeLocation } from "../../@types/CooperativeTypes";
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
 
-export interface IGetCooperativesLocationService
+export interface GetCooperativesLocationService
   extends IServiceExecute<void, CooperativeLocation[]> {}
 
-export class GetCooperativesLocationService
-  implements IGetCooperativesLocationService
+export class GetCooperativesLocationServiceImpl
+  implements GetCooperativesLocationService
 {
   private repository: ICooperativeRepository;
 

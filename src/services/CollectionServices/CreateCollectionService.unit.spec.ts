@@ -1,7 +1,7 @@
-import { CreateCollectionService } from "./CreateCollectionService";
-import { IValidateUserByIdService } from "../UserServices/ValidateUserByIdService";
-import { IGetCooperativesLocationService } from "../CooperativeServices/GetCooperativesLocationService";
-import { IValidateTypesService } from "../RecyclingTypesServices/ValidateTypesService";
+import { CreateCollectionServiceImpl } from "./CreateCollectionService";
+import { ValidateUserByIdService } from "../UserServices/ValidateUserByIdService";
+import { GetCooperativesLocationService } from "../CooperativeServices/GetCooperativesLocationService";
+import { ValidateTypesService } from "../RecyclingTypesServices/ValidateTypesService";
 import { ICollectionRepository } from "../../repositories/ICollectionRepository";
 import { MockCollectionRepository } from "../../repositories/prisma/mocks/MockCollectionRepository";
 import { UserFactory } from "../../../tests/factories/UserFactory";
@@ -9,18 +9,18 @@ import { CooperativeFactory } from "../../../tests/factories/CooperativeFactory"
 import { CollectionFactory } from "../../../tests/factories/CollectionFactory";
 
 describe("Create Collection Service", () => {
-  const validateUserByIdService: IValidateUserByIdService = {
+  const validateUserByIdService: ValidateUserByIdService = {
     execute: jest.fn(),
   };
-  const getCooperativesLocationService: IGetCooperativesLocationService = {
+  const getCooperativesLocationService: GetCooperativesLocationService = {
     execute: jest.fn(),
   };
-  const validateRecyclingTypesService: IValidateTypesService = {
+  const validateRecyclingTypesService: ValidateTypesService = {
     execute: jest.fn(),
   };
   const repository: ICollectionRepository = new MockCollectionRepository();
 
-  const service = new CreateCollectionService(
+  const service = new CreateCollectionServiceImpl(
     validateUserByIdService,
     getCooperativesLocationService,
     validateRecyclingTypesService,

@@ -4,12 +4,12 @@ import { Token } from "../../@types/TokenTypes";
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
 import { CustomError } from "../../entities/CustomError";
 
-export interface ILoginCooperativeService
+export interface LoginCooperativeService
   extends IServiceExecute<LoginCooperative, Token> {}
 
-export class LoginCooperativeService
+export class LoginCooperativeServiceImpl
   extends LoginService<ICooperativeRepository>
-  implements ILoginCooperativeService
+  implements LoginCooperativeService
 {
   async execute(cooperativeLoginData: LoginCooperative): Promise<Token> {
     const cooperative = await this.repository.findByEmail(

@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 
 import { Controller } from "../../@types/ControllerTypes";
-import { ICreateCooperativeService } from "../../services/CooperativeServices/CreateCooperativeService";
+import { CreateCooperativeService } from "../../services/CooperativeServices/CreateCooperativeService";
 import { CreateCooperativeReq } from "../../@types/CooperativeTypes";
 
-export class CreateCooperativeController extends Controller<ICreateCooperativeService> {
+export class CreateCooperativeController extends Controller<CreateCooperativeService> {
   async handle(req: Request, res: Response): Promise<void> {
     const createCooperativeData: CreateCooperativeReq = req.body;
 

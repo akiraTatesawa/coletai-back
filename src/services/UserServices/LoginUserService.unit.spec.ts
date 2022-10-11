@@ -1,6 +1,6 @@
 import { IUserRepository } from "../../repositories/IUserRepository";
 import { MockUserRepository } from "../../repositories/prisma/mocks/MockUserRepository";
-import { ILoginUserService, LoginUserService } from "./LoginUserService";
+import { LoginUserService, LoginUserServiceImpl } from "./LoginUserService";
 import { JWTUtilsInterface } from "../../utils/JWTUtils";
 import { MockJWTUtils } from "../../utils/mocks/MockJWTUtils";
 import { CryptUtils, ICryptUtils } from "../../utils/CryptUtils";
@@ -11,7 +11,7 @@ describe("Login User Service", () => {
   const repository: IUserRepository = new MockUserRepository();
   const jwtUtils: JWTUtilsInterface = new MockJWTUtils();
   const cryptUtils: ICryptUtils = new CryptUtils();
-  const service: ILoginUserService = new LoginUserService(
+  const service: LoginUserService = new LoginUserServiceImpl(
     repository,
     cryptUtils,
     jwtUtils

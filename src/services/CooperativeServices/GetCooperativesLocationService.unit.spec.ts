@@ -1,15 +1,11 @@
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
 import { MockCooperativeRepository } from "../../repositories/prisma/mocks/MockCooperativeRepository";
 import { CooperativeFactory } from "../../../tests/factories/CooperativeFactory";
-import {
-  GetCooperativesLocationService,
-  IGetCooperativesLocationService,
-} from "./GetCooperativesLocationService";
+import { GetCooperativesLocationServiceImpl } from "./GetCooperativesLocationService";
 
 describe("Get Cooperatives location Service", () => {
   const repository: ICooperativeRepository = new MockCooperativeRepository();
-  const service: IGetCooperativesLocationService =
-    new GetCooperativesLocationService(repository);
+  const service = new GetCooperativesLocationServiceImpl(repository);
 
   const cooperativeFactory = new CooperativeFactory();
 

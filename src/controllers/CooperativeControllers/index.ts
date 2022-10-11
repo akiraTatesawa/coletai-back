@@ -1,13 +1,16 @@
 import { CooperativeRepository } from "../../repositories/prisma/CooperativeRepository";
-import { CreateCooperativeService } from "../../services/CooperativeServices/CreateCooperativeService";
+
 import { CryptUtils } from "../../utils/CryptUtils";
-import { CreateCooperativeController } from "./CreateCooperativeController";
-import { LoginCooperativeService } from "../../services/CooperativeServices/LoginCooperativeService";
 import { JWTUtils } from "../../utils/JWTUtils";
+
+import { CreateCooperativeServiceImpl } from "../../services/CooperativeServices/CreateCooperativeService";
+import { LoginCooperativeServiceImpl } from "../../services/CooperativeServices/LoginCooperativeService";
+import { GetAllCooperativesNameServiceImpl } from "../../services/CooperativeServices/GetAllCooperativesNameService";
+import { GetFullAddressServiceImpl } from "../../services/NominatimServices/GetFullAddressService";
+
+import { CreateCooperativeController } from "./CreateCooperativeController";
 import { LoginCooperativeController } from "./LoginCooperativeController";
 import { GetAllCooperativesNameController } from "./GetAllCooperativesNameController";
-import { GetAllCooperativesNameService } from "../../services/CooperativeServices/GetAllCooperativesNameService";
-import { GetFullAddressServiceImpl } from "../../services/NominatimServices/GetFullAddressService";
 
 function getCooperativeRepo() {
   return new CooperativeRepository();
@@ -25,7 +28,7 @@ export function createCooperativeController() {
   const { cryptUtils } = getUtils();
   const getFullAddressService = new GetFullAddressServiceImpl();
 
-  const service = new CreateCooperativeService(
+  const service = new CreateCooperativeServiceImpl(
     repository,
     cryptUtils,
     getFullAddressService
@@ -37,15 +40,17 @@ export function createCooperativeController() {
 export function loginCooperativeController() {
   const repository = getCooperativeRepo();
   const { cryptUtils, jwtUtils } = getUtils();
-  const service = new LoginCooperativeService(repository, cryptUtils, jwtUtils);
-  const controller = new LoginCooperativeController(service);
-
-  return controller;
+  const service = new LoginCooperativeServiceImpl(
+    repository,
+    cryptUtils,
+    jwtUtils
+  );
+  return new LoginCooperativeController(service);
 }
 
 export function getAllCooperativesNameController() {
   const repository = getCooperativeRepo();
-  const service = new GetAllCooperativesNameService(repository);
+  const service = new GetAllCooperativesNameServiceImpl(repository);
 
   return new GetAllCooperativesNameController(service);
 }

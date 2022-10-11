@@ -1,29 +1,29 @@
 import { User } from "@prisma/client";
 import { IServiceExecute } from "../../@types/ServiceTypes";
 import { CreateCollectionData } from "../../@types/CollectionTypes";
-import { IValidateUserByIdService } from "../UserServices/ValidateUserByIdService";
-import { IGetCooperativesLocationService } from "../CooperativeServices/GetCooperativesLocationService";
+import { ValidateUserByIdService } from "../UserServices/ValidateUserByIdService";
+import { GetCooperativesLocationService } from "../CooperativeServices/GetCooperativesLocationService";
 import { ICollectionRepository } from "../../repositories/ICollectionRepository";
 import { CooperativeLocation } from "../../@types/CooperativeTypes";
 import { Collection } from "../../entities/Collection";
-import { IValidateTypesService } from "../RecyclingTypesServices/ValidateTypesService";
+import { ValidateTypesService } from "../RecyclingTypesServices/ValidateTypesService";
 
-export interface ICreateCollectionService
+export interface CreateCollectionService
   extends IServiceExecute<CreateCollectionData, void> {}
 
-export class CreateCollectionService implements ICreateCollectionService {
-  private validateUserService: IValidateUserByIdService;
+export class CreateCollectionServiceImpl implements CreateCollectionService {
+  private validateUserService: ValidateUserByIdService;
 
-  private getCooperativesLocationService: IGetCooperativesLocationService;
+  private getCooperativesLocationService: GetCooperativesLocationService;
 
-  private validateTypesService: IValidateTypesService;
+  private validateTypesService: ValidateTypesService;
 
   private repository: ICollectionRepository;
 
   constructor(
-    validateUserService: IValidateUserByIdService,
-    getCooperativesLocationService: IGetCooperativesLocationService,
-    validateTypesService: IValidateTypesService,
+    validateUserService: ValidateUserByIdService,
+    getCooperativesLocationService: GetCooperativesLocationService,
+    validateTypesService: ValidateTypesService,
     repository: ICollectionRepository
   ) {
     this.validateUserService = validateUserService;

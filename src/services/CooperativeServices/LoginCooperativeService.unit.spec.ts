@@ -6,16 +6,14 @@ import { JWTUtilsInterface } from "../../utils/JWTUtils";
 import { MockJWTUtils } from "../../utils/mocks/MockJWTUtils";
 import { CooperativeFactory } from "../../../tests/factories/CooperativeFactory";
 import { CustomError } from "../../entities/CustomError";
-import {
-  ILoginCooperativeService,
-  LoginCooperativeService,
-} from "./LoginCooperativeService";
+import { LoginCooperativeServiceImpl } from "./LoginCooperativeService";
 
 describe("Login Cooperative Service", () => {
   const repository: ICooperativeRepository = new MockCooperativeRepository();
   const cryptUtils: ICryptUtils = new MockCryptUtils();
   const jwtUtils: JWTUtilsInterface = new MockJWTUtils();
-  const service: ILoginCooperativeService = new LoginCooperativeService(
+
+  const service = new LoginCooperativeServiceImpl(
     repository,
     cryptUtils,
     jwtUtils

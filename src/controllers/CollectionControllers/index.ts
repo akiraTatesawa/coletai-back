@@ -1,19 +1,21 @@
 import { CollectionRepository } from "../../repositories/prisma/CollectionRepository";
 import { UserRepository } from "../../repositories/prisma/UserRepository";
 import { CooperativeRepository } from "../../repositories/prisma/CooperativeRepository";
-import { ValidateUserByIdService } from "../../services/UserServices/ValidateUserByIdService";
-import { GetCooperativesLocationService } from "../../services/CooperativeServices/GetCooperativesLocationService";
-import { CreateCollectionService } from "../../services/CollectionServices/CreateCollectionService";
-import { CreateCollectionController } from "./CreateCollectionController";
 import { RecyclingTypesRepository } from "../../repositories/prisma/RecyclingTypesRepository";
-import { ValidateTypesService } from "../../services/RecyclingTypesServices/ValidateTypesService";
-import { ListCollectionsByIdService } from "../../services/CollectionServices/ListCollectionsByIdService";
+
+import { ValidateUserByIdServiceImpl } from "../../services/UserServices/ValidateUserByIdService";
+import { GetCooperativesLocationServiceImpl } from "../../services/CooperativeServices/GetCooperativesLocationService";
+import { CreateCollectionServiceImpl } from "../../services/CollectionServices/CreateCollectionService";
+import { FinishCollectionServiceImpl } from "../../services/CollectionServices/FinishCollectionService";
+import { ValidateTypesServiceImpl } from "../../services/RecyclingTypesServices/ValidateTypesService";
+import { ListCollectionsByIdServiceImpl } from "../../services/CollectionServices/ListCollectionsByIdService";
+import { CancelCollectionServiceImpl } from "../../services/CollectionServices/CancelCollectionService";
+
 import { ListCollectionsByUserIdController } from "./ListCollectionsByUserIdController";
 import { ListCollectionsByCooperativeIdController } from "./ListCollectionsByCooperativeIdController";
-import { CancelCollectionService } from "../../services/CollectionServices/CancelCollectionService";
 import { CancelCollectionController } from "./CancelCollectionController";
-import { FinishCollectionService } from "../../services/CollectionServices/FinishCollectionService";
 import { FinishCollectionController } from "./FinishCollectionController";
+import { CreateCollectionController } from "./CreateCollectionController";
 
 function setCollectionRepository() {
   return new CollectionRepository();
@@ -25,15 +27,15 @@ export function createCollectionController() {
   const cooperativeRepository = new CooperativeRepository();
   const recyclingTypesRepository = new RecyclingTypesRepository();
 
-  const validateUserService = new ValidateUserByIdService(userRepository);
-  const validateTypesService = new ValidateTypesService(
+  const validateUserService = new ValidateUserByIdServiceImpl(userRepository);
+  const validateTypesService = new ValidateTypesServiceImpl(
     recyclingTypesRepository
   );
-  const getCooperativesLocationService = new GetCooperativesLocationService(
+  const getCooperativesLocationService = new GetCooperativesLocationServiceImpl(
     cooperativeRepository
   );
 
-  const createCollectionService = new CreateCollectionService(
+  const createCollectionService = new CreateCollectionServiceImpl(
     validateUserService,
     getCooperativesLocationService,
     validateTypesService,
@@ -45,28 +47,28 @@ export function createCollectionController() {
 
 export function listCollectionsByUserIdController() {
   const collectionRepository = setCollectionRepository();
-  const service = new ListCollectionsByIdService(collectionRepository);
+  const service = new ListCollectionsByIdServiceImpl(collectionRepository);
 
   return new ListCollectionsByUserIdController(service);
 }
 
 export function listCollectionsByCooperativeIdController() {
   const collectionRepository = setCollectionRepository();
-  const service = new ListCollectionsByIdService(collectionRepository);
+  const service = new ListCollectionsByIdServiceImpl(collectionRepository);
 
   return new ListCollectionsByCooperativeIdController(service);
 }
 
 export function cancelCollectionController() {
   const collectionRepository = setCollectionRepository();
-  const service = new CancelCollectionService(collectionRepository);
+  const service = new CancelCollectionServiceImpl(collectionRepository);
 
   return new CancelCollectionController(service);
 }
 
 export function finishCollectionController() {
   const collectionRepository = setCollectionRepository();
-  const service = new FinishCollectionService(collectionRepository);
+  const service = new FinishCollectionServiceImpl(collectionRepository);
 
   return new FinishCollectionController(service);
 }

@@ -12,10 +12,10 @@ import { GetFullAddressService } from "../NominatimServices/GetFullAddressServic
 type CooperativeEmail = Pick<CreateCooperativePrisma, "email">;
 type CooperativeName = Pick<CreateCooperativePrisma, "name">;
 
-export interface ICreateCooperativeService
+export interface CreateCooperativeService
   extends IServiceExecute<CreateCooperativeReq, void> {}
 
-export class CreateCooperativeService implements ICreateCooperativeService {
+export class CreateCooperativeServiceImpl implements CreateCooperativeService {
   private repository: ICooperativeRepository;
 
   private cryptUtils: ICryptUtils;
