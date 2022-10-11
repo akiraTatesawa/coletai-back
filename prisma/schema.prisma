@@ -17,6 +17,7 @@ model User {
   password    String
   latitude    Float
   longitude   Float
+  address     String
   created_at  DateTime     @default(now())
   collections Collection[]
 
@@ -30,6 +31,7 @@ model Cooperative {
   password    String
   latitude    Float
   longitude   Float
+  address     String
   created_at  DateTime     @default(now())
   collections Collection[]
 

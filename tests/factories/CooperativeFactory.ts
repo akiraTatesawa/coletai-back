@@ -5,13 +5,14 @@ import {
   randLongitude,
   randUuid,
   randCompanyName,
+  randFullAddress,
 } from "@ngneat/falso";
 import { Cooperative as PrismaCooperative } from "@prisma/client";
 import {
-  CreateCooperativePrisma,
   LoginCooperative,
   CooperativeLocation,
   CooperativeLocationName,
+  CreateCooperativeReq,
 } from "../../src/@types/CooperativeTypes";
 import { Cooperative } from "../../src/entities/Cooperative";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
@@ -21,8 +22,8 @@ import { prisma } from "../../src/database/prisma";
 export class CooperativeFactory {
   private cryptUtils: ICryptUtils = new CryptUtils();
 
-  generateReqSignUpCooperativeData(): CreateCooperativePrisma {
-    const data: CreateCooperativePrisma = {
+  generateReqSignUpCooperativeData(): CreateCooperativeReq {
+    const data: CreateCooperativeReq = {
       name: randCompanyName(),
       email: randEmail(),
       password: randPassword(),
@@ -34,10 +35,10 @@ export class CooperativeFactory {
   }
 
   generateReqSignUpInvalidCooperativeData(): Omit<
-    CreateCooperativePrisma,
+    CreateCooperativeReq,
     "latitude"
   > {
-    const invalidData: Omit<CreateCooperativePrisma, "latitude"> = {
+    const invalidData: Omit<CreateCooperativeReq, "latitude"> = {
       name: randCompanyName(),
       email: randEmail(),
       password: randPassword(),
@@ -49,13 +50,14 @@ export class CooperativeFactory {
 
   generatePrismaCooperativeData(): {
     prismaCooperative: PrismaCooperative;
-    reqCooperative: CreateCooperativePrisma;
+    reqCooperative: CreateCooperativeReq;
   } {
-    const data: CreateCooperativePrisma =
-      this.generateReqSignUpCooperativeData();
+    const data: CreateCooperativeReq = this.generateReqSignUpCooperativeData();
+
+    const address = randFullAddress();
 
     const prismaCooperative: PrismaCooperative = {
-      ...new Cooperative(data, this.cryptUtils),
+      ...new Cooperative({ ...data, address }, this.cryptUtils),
       id: randUuid(),
       created_at: new Date(),
     };
@@ -75,19 +77,23 @@ export class CooperativeFactory {
 
   async createPrismaCooperative(): Promise<{
     reqLogin: LoginCooperative;
-    reqCooperative: CreateCooperativePrisma;
+    reqCooperative: CreateCooperativeReq;
     token: {
       Authorization: string;
     };
     prismaCooperative: PrismaCooperative;
   }> {
-    const reqCooperative = this.generateReqSignUpCooperativeData();
+    const { reqCooperative } = this.generatePrismaCooperativeData();
+
     const reqLogin: LoginCooperative = {
       email: reqCooperative.email,
       password: reqCooperative.password,
     };
 
-    const cooperative = new Cooperative(reqCooperative, this.cryptUtils);
+    const cooperative = new Cooperative(
+      { ...reqCooperative, address: randFullAddress() },
+      this.cryptUtils
+    );
 
     const prismaCooperative = await prisma.cooperative.create({
       data: cooperative,

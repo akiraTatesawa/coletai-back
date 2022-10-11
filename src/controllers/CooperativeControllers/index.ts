@@ -7,6 +7,7 @@ import { JWTUtils } from "../../utils/JWTUtils";
 import { LoginCooperativeController } from "./LoginCooperativeController";
 import { GetAllCooperativesNameController } from "./GetAllCooperativesNameController";
 import { GetAllCooperativesNameService } from "../../services/CooperativeServices/GetAllCooperativesNameService";
+import { GetFullAddressServiceImpl } from "../../services/NominatimServices/GetFullAddressService";
 
 function getCooperativeRepo() {
   return new CooperativeRepository();
@@ -22,10 +23,15 @@ function getUtils() {
 export function createCooperativeController() {
   const repository = getCooperativeRepo();
   const { cryptUtils } = getUtils();
-  const service = new CreateCooperativeService(repository, cryptUtils);
-  const controller = new CreateCooperativeController(service);
+  const getFullAddressService = new GetFullAddressServiceImpl();
 
-  return controller;
+  const service = new CreateCooperativeService(
+    repository,
+    cryptUtils,
+    getFullAddressService
+  );
+
+  return new CreateCooperativeController(service);
 }
 
 export function loginCooperativeController() {

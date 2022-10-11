@@ -12,16 +12,19 @@ export class User implements CreateUserPrisma {
 
   readonly password: string;
 
+  readonly address: string;
+
   #cryptUtils: ICryptUtils;
 
   constructor(
-    { email, latitude, longitude, name, password }: CreateUserPrisma,
+    { email, latitude, longitude, name, password, address }: CreateUserPrisma,
     cryptUtils: ICryptUtils
   ) {
     this.email = email;
     this.latitude = latitude;
     this.longitude = longitude;
     this.name = name;
+    this.address = address;
     this.#cryptUtils = cryptUtils;
     this.password = this.#cryptUtils.hashDataBcrypt(password);
   }

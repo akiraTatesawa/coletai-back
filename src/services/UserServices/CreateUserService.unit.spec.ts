@@ -1,18 +1,23 @@
 import { MockUserRepository } from "../../repositories/prisma/mocks/MockUserRepository";
-import { CreateUserService, ICreateUserService } from "./CreateUserService";
+import { CreateUserServiceImpl } from "./CreateUserService";
 import { MockCryptUtils } from "../../utils/mocks/MockCryptUtils";
 import { IUserRepository } from "../../repositories/IUserRepository";
 import { ICryptUtils } from "../../utils/CryptUtils";
 import { UserFactory } from "../../../tests/factories/UserFactory";
 import { CustomError } from "../../entities/CustomError";
+import { GetFullAddressService } from "../NominatimServices/GetFullAddressService";
 
 describe("Create User Service", () => {
   const userRepository: IUserRepository = new MockUserRepository();
   const cryptUtils: ICryptUtils = new MockCryptUtils();
-  const createUserService: ICreateUserService = new CreateUserService(
+  const getFullAddressService: GetFullAddressService = { execute: jest.fn() };
+
+  const service = new CreateUserServiceImpl(
     userRepository,
-    cryptUtils
+    cryptUtils,
+    getFullAddressService
   );
+
   const userFactory = new UserFactory();
 
   it("Should be able to create an user", async () => {
@@ -20,7 +25,7 @@ describe("Create User Service", () => {
 
     jest.spyOn(userRepository, "insert").mockResolvedValueOnce();
 
-    await expect(createUserService.execute(user)).resolves.not.toThrow();
+    await expect(service.execute(user)).resolves.not.toThrow();
     expect(userRepository.insert).toHaveBeenCalledTimes(1);
   });
 
@@ -29,7 +34,7 @@ describe("Create User Service", () => {
 
     jest.spyOn(userRepository, "getByEmail").mockResolvedValueOnce(prismaUser);
 
-    await expect(createUserService.execute(reqUser)).rejects.toEqual(
+    await expect(service.execute(reqUser)).rejects.toEqual(
       new CustomError(
         "error_conflict",
         `The email ${reqUser.email} is already being used`

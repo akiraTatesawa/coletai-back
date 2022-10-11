@@ -5,9 +5,10 @@ import {
   randLatitude,
   randLongitude,
   randUuid,
+  randFullAddress,
 } from "@ngneat/falso";
 import { User as PrismaUser } from "@prisma/client";
-import { CreateUserPrisma, LoginUser } from "../../src/@types/UserTypes";
+import { LoginUser, CreateUserReq } from "../../src/@types/UserTypes";
 import { User } from "../../src/entities/User";
 import { ICryptUtils, CryptUtils } from "../../src/utils/CryptUtils";
 import { JWTUtils } from "../../src/utils/JWTUtils";
@@ -20,8 +21,8 @@ interface Header {
 export class UserFactory {
   private cryptUtils: ICryptUtils = new CryptUtils();
 
-  generateReqSignUpUserData(): CreateUserPrisma {
-    const data: CreateUserPrisma = {
+  generateReqSignUpUserData(): CreateUserReq {
+    const data: CreateUserReq = {
       name: randUserName(),
       email: randEmail(),
       password: randPassword(),
@@ -32,8 +33,8 @@ export class UserFactory {
     return data;
   }
 
-  generateReqSignUpInvalidUserData(): Omit<CreateUserPrisma, "latitude"> {
-    const invalidData: Omit<CreateUserPrisma, "latitude"> = {
+  generateReqSignUpInvalidUserData(): Omit<CreateUserReq, "latitude"> {
+    const invalidData: Omit<CreateUserReq, "latitude"> = {
       name: randUserName(),
       email: randEmail(),
       password: randPassword(),
@@ -45,12 +46,14 @@ export class UserFactory {
 
   generatePrismaUserData(): {
     prismaUser: PrismaUser;
-    reqUser: CreateUserPrisma;
+    reqUser: CreateUserReq;
   } {
-    const data: CreateUserPrisma = this.generateReqSignUpUserData();
+    const data: CreateUserReq = this.generateReqSignUpUserData();
+
+    const address = randFullAddress();
 
     const prismaUser: PrismaUser = {
-      ...new User(data, this.cryptUtils),
+      ...new User({ ...data, address }, this.cryptUtils),
       id: randUuid(),
       created_at: new Date(),
     };
@@ -69,18 +72,21 @@ export class UserFactory {
   }
 
   async createPrismaUser(): Promise<{
-    reqUser: CreateUserPrisma;
+    reqUser: CreateUserReq;
     loginUser: LoginUser;
     config: Header;
     prismaUser: PrismaUser;
   }> {
     const reqUser = this.generateReqSignUpUserData();
+
     const loginUser: LoginUser = {
       email: reqUser.email,
       password: reqUser.password,
     };
 
-    const user = new User(reqUser, this.cryptUtils);
+    const address = randFullAddress();
+
+    const user = new User({ ...reqUser, address }, this.cryptUtils);
 
     const prismaUser = await prisma.user.create({
       data: user,
