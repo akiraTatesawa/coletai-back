@@ -1,6 +1,7 @@
 import {
   randCompanyName,
   randEmail,
+  randFullAddress,
   randLatitude,
   randLongitude,
   randPassword,
@@ -29,6 +30,7 @@ class Seed implements ISeed {
       password: randPassword(),
       latitude: randLatitude(),
       longitude: randLongitude(),
+      address: randFullAddress(),
     };
 
     return new User(data, this.cryptUtils);
@@ -41,6 +43,7 @@ class Seed implements ISeed {
       password: randPassword(),
       latitude: randLatitude(),
       longitude: randLongitude(),
+      address: randFullAddress(),
     };
 
     return new Cooperative(data, this.cryptUtils);

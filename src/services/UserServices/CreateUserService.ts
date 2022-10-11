@@ -1,23 +1,31 @@
 import { IServiceExecute } from "../../@types/ServiceTypes";
-import { CreateUserPrisma } from "../../@types/UserTypes";
+import { CreateUserPrisma, CreateUserReq } from "../../@types/UserTypes";
 import { IUserRepository } from "../../repositories/IUserRepository";
 import { CustomError } from "../../entities/CustomError";
 import { ICryptUtils } from "../../utils/CryptUtils";
 import { User } from "../../entities/User";
+import { GetFullAddressService } from "../NominatimServices/GetFullAddressService";
 
-type UserEmail = Pick<CreateUserPrisma, "email">;
+type UserEmail = Pick<CreateUserReq, "email">;
 
-export interface ICreateUserService
-  extends IServiceExecute<CreateUserPrisma, void> {}
+export interface CreateUserService
+  extends IServiceExecute<CreateUserReq, void> {}
 
-export class CreateUserService implements ICreateUserService {
+export class CreateUserServiceImpl implements CreateUserService {
   private repository: IUserRepository;
 
   private cryptUtils: ICryptUtils;
 
-  constructor(repository: IUserRepository, cryptUtils: ICryptUtils) {
+  private getFullAddressService: GetFullAddressService;
+
+  constructor(
+    repository: IUserRepository,
+    cryptUtils: ICryptUtils,
+    getFullAddressService: GetFullAddressService
+  ) {
     this.repository = repository;
     this.cryptUtils = cryptUtils;
+    this.getFullAddressService = getFullAddressService;
   }
 
   private async isUnique({ email }: UserEmail): Promise<boolean> {
@@ -30,17 +38,28 @@ export class CreateUserService implements ICreateUserService {
     return false;
   }
 
-  async execute(data: CreateUserPrisma): Promise<void> {
-    const isEmailUnique = await this.isUnique({ email: data.email });
+  async execute(userReqData: CreateUserReq): Promise<void> {
+    const isEmailUnique = await this.isUnique({ email: userReqData.email });
 
     if (!isEmailUnique) {
       throw new CustomError(
         "error_conflict",
-        `The email ${data.email} is already being used`
+        `The email ${userReqData.email} is already being used`
       );
     }
 
-    const user = new User(data, this.cryptUtils);
+    const address = await this.getFullAddressService.execute(userReqData);
+
+    if (!address) {
+      throw new CustomError(
+        "error_bad_request",
+        "Invalid latitude and longitude"
+      );
+    }
+
+    const createUserData: CreateUserPrisma = { ...userReqData, address };
+
+    const user = new User(createUserData, this.cryptUtils);
 
     await this.repository.insert(user);
   }
