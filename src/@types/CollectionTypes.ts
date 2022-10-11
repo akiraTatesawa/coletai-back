@@ -26,6 +26,7 @@ export interface CollectionList
   user: {
     id: string;
     name: string;
+    address: string;
   };
   types: {
     name: string;
