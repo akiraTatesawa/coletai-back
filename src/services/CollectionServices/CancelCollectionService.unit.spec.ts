@@ -1,9 +1,12 @@
 import { randUuid } from "@ngneat/falso";
-import { ICollectionRepository } from "../../repositories/ICollectionRepository";
-import { MockCollectionRepository } from "../../repositories/prisma/mocks/MockCollectionRepository";
+
 import { CollectionFactory } from "../../../tests/factories/CollectionFactory";
 import { CustomError } from "../../entities/CustomError";
+
+import { ICollectionRepository } from "../../repositories/ICollectionRepository";
+
 import { CancelCollectionServiceImpl } from "./CancelCollectionService";
+import { MockCollectionRepository } from "../../repositories/mocks/MockCollectionRepository";
 
 describe("Cancel Collection Service", () => {
   const repository: ICollectionRepository = new MockCollectionRepository();

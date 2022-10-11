@@ -1,6 +1,6 @@
 import { randUuid } from "@ngneat/falso";
 import { ICollectionRepository } from "../../repositories/ICollectionRepository";
-import { MockCollectionRepository } from "../../repositories/prisma/mocks/MockCollectionRepository";
+import { MockCollectionRepository } from "../../repositories/mocks/MockCollectionRepository";
 import { FinishCollectionServiceImpl } from "./FinishCollectionService";
 import { CollectionFactory } from "../../../tests/factories/CollectionFactory";
 import { CustomError } from "../../entities/CustomError";

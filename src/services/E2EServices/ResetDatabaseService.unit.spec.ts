@@ -1,5 +1,5 @@
 import { IE2ERepository } from "../../repositories/IE2ERepository";
-import { MockE2ERepository } from "../../repositories/prisma/mocks/MockE2ERepository";
+import { MockE2ERepository } from "../../repositories/mocks/MockE2ERepository";
 import { ResetDatabaseServiceImpl } from "./ResetDatabaseService";
 
 describe("Reset Database Service", () => {

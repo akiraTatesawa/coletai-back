@@ -1,4 +1,4 @@
-import { IUserRepository } from "../../IUserRepository";
+import { IUserRepository } from "../IUserRepository";
 
 export class MockUserRepository implements IUserRepository {
   getByEmail = jest.fn();

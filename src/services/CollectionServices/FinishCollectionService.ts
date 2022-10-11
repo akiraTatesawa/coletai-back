@@ -1,6 +1,7 @@
 import { IServiceExecute } from "../../@types/ServiceTypes";
-import { ICollectionRepository } from "../../repositories/ICollectionRepository";
 import { CustomError } from "../../entities/CustomError";
+
+import { ICollectionRepository } from "../../repositories/ICollectionRepository";
 
 type FinishCollectionReqData = {
   cooperativeId: string;

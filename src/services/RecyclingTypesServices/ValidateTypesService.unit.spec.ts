@@ -1,5 +1,5 @@
 import { RecyclingTypes } from "@prisma/client";
-import { MockRecyclingTypesRepository } from "../../repositories/prisma/mocks/MockRecyclingTypesRepository";
+import { MockRecyclingTypesRepository } from "../../repositories/mocks/MockRecyclingTypesRepository";
 import {
   ValidateTypesService,
   ValidateTypesServiceImpl,
