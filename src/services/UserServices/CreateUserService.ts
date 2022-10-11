@@ -50,14 +50,10 @@ export class CreateUserServiceImpl implements CreateUserService {
 
     const address = await this.getFullAddressService.execute(userReqData);
 
-    if (!address) {
-      throw new CustomError(
-        "error_bad_request",
-        "Invalid latitude and longitude"
-      );
-    }
-
-    const createUserData: CreateUserPrisma = { ...userReqData, address };
+    const createUserData: CreateUserPrisma = {
+      ...userReqData,
+      address: address || "unregistered address",
+    };
 
     const user = new User(createUserData, this.cryptUtils);
 

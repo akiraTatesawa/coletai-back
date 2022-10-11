@@ -73,16 +73,9 @@ export class CreateCooperativeService implements ICreateCooperativeService {
       cooperativeReqData
     );
 
-    if (!address) {
-      throw new CustomError(
-        "error_bad_request",
-        "Invalid latitude and longitude"
-      );
-    }
-
     const createCooperativeData: CreateCooperativePrisma = {
       ...cooperativeReqData,
-      address,
+      address: address || "unregistered address",
     };
 
     const cooperative = new Cooperative(createCooperativeData, this.cryptUtils);

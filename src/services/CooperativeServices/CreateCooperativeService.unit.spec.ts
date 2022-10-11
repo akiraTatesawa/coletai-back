@@ -5,11 +5,18 @@ import { CreateCooperativeService } from "./CreateCooperativeService";
 import { ICryptUtils } from "../../utils/CryptUtils";
 import { CooperativeFactory } from "../../../tests/factories/CooperativeFactory";
 import { CustomError } from "../../entities/CustomError";
+import { GetFullAddressService } from "../NominatimServices/GetFullAddressService";
 
 describe("Create Cooperative Service", () => {
   const repository: ICooperativeRepository = new MockCooperativeRepository();
   const cryptUtils: ICryptUtils = new MockCryptUtils();
-  const service = new CreateCooperativeService(repository, cryptUtils);
+  const getFullAddressService: GetFullAddressService = { execute: jest.fn() };
+
+  const service = new CreateCooperativeService(
+    repository,
+    cryptUtils,
+    getFullAddressService
+  );
 
   const cooperativeFactory = new CooperativeFactory();
 

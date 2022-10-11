@@ -5,8 +5,6 @@ import { IUserRepository } from "../IUserRepository";
 
 export class UserRepository implements IUserRepository {
   async insert(userData: CreateUserPrisma): Promise<void> {
-    console.log(userData);
-
     await prisma.user.create({
       data: userData,
     });
