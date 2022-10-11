@@ -1,7 +1,7 @@
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
 import { MockCooperativeRepository } from "../../repositories/prisma/mocks/MockCooperativeRepository";
 import { MockCryptUtils } from "../../utils/mocks/MockCryptUtils";
-import { CreateCooperativeService } from "./CreateCooperativeService";
+import { CreateCooperativeServiceImpl } from "./CreateCooperativeService";
 import { ICryptUtils } from "../../utils/CryptUtils";
 import { CooperativeFactory } from "../../../tests/factories/CooperativeFactory";
 import { CustomError } from "../../entities/CustomError";
@@ -12,7 +12,7 @@ describe("Create Cooperative Service", () => {
   const cryptUtils: ICryptUtils = new MockCryptUtils();
   const getFullAddressService: GetFullAddressService = { execute: jest.fn() };
 
-  const service = new CreateCooperativeService(
+  const service = new CreateCooperativeServiceImpl(
     repository,
     cryptUtils,
     getFullAddressService

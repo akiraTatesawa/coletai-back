@@ -1,13 +1,13 @@
 import { randUuid } from "@ngneat/falso";
 import { ICollectionRepository } from "../../repositories/ICollectionRepository";
 import { MockCollectionRepository } from "../../repositories/prisma/mocks/MockCollectionRepository";
-import { FinishCollectionService } from "./FinishCollectionService";
+import { FinishCollectionServiceImpl } from "./FinishCollectionService";
 import { CollectionFactory } from "../../../tests/factories/CollectionFactory";
 import { CustomError } from "../../entities/CustomError";
 
 describe("Finish Collection Service", () => {
   const repository: ICollectionRepository = new MockCollectionRepository();
-  const service = new FinishCollectionService(repository);
+  const service = new FinishCollectionServiceImpl(repository);
 
   it("Should be able to finish a collection", async () => {
     const cooperativeId = randUuid();

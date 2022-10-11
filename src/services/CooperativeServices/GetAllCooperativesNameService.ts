@@ -2,10 +2,12 @@ import { IServiceExecute } from "../../@types/ServiceTypes";
 import { CooperativeLocationName } from "../../@types/CooperativeTypes";
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
 
-export interface IGetAllCooperativesName
+export interface GetAllCooperativesNameService
   extends IServiceExecute<void, CooperativeLocationName[]> {}
 
-export class GetAllCooperativesNameService implements IGetAllCooperativesName {
+export class GetAllCooperativesNameServiceImpl
+  implements GetAllCooperativesNameService
+{
   private repository: ICooperativeRepository;
 
   constructor(repository: ICooperativeRepository) {

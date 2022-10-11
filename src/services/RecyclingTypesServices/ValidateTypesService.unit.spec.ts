@@ -2,7 +2,7 @@ import { RecyclingTypes } from "@prisma/client";
 import { MockRecyclingTypesRepository } from "../../repositories/prisma/mocks/MockRecyclingTypesRepository";
 import {
   ValidateTypesService,
-  IValidateTypesService,
+  ValidateTypesServiceImpl,
 } from "./ValidateTypesService";
 import { IRecyclingTypesRepository } from "../../repositories/IRecyclingTypesRepository";
 import { RecyclingTypesFactory } from "../../../tests/factories/RecyclingTypesFactory";
@@ -11,7 +11,9 @@ import { CustomError } from "../../entities/CustomError";
 describe("Validate Recycling Types Service", () => {
   const repository: IRecyclingTypesRepository =
     new MockRecyclingTypesRepository();
-  const service: IValidateTypesService = new ValidateTypesService(repository);
+  const service: ValidateTypesService = new ValidateTypesServiceImpl(
+    repository
+  );
   const recyclingTypesFactory = new RecyclingTypesFactory();
 
   it("Should validate all the types without throwing an error", async () => {

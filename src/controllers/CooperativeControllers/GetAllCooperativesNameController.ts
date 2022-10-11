@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
 import { Controller } from "../../@types/ControllerTypes";
-import { IGetAllCooperativesName } from "../../services/CooperativeServices/GetAllCooperativesNameService";
+import { GetAllCooperativesNameService } from "../../services/CooperativeServices/GetAllCooperativesNameService";
 
-export class GetAllCooperativesNameController extends Controller<IGetAllCooperativesName> {
+export class GetAllCooperativesNameController extends Controller<GetAllCooperativesNameService> {
   async handle(req: Request, res: Response): Promise<void> {
     const cooperatives = await this.service.execute();
 

@@ -1,10 +1,10 @@
 import Joi from "joi";
 import {
-  CreateCooperativePrisma,
+  CreateCooperativeReq,
   LoginCooperative,
 } from "../@types/CooperativeTypes";
 
-export const createUserSchema = Joi.object<CreateCooperativePrisma>({
+export const createUserSchema = Joi.object<CreateCooperativeReq>({
   name: Joi.string().trim().required(),
   email: Joi.string().email({ tlds: false }).trim().required(),
   password: Joi.string().required(),

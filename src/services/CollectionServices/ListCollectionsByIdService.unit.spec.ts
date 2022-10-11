@@ -2,13 +2,13 @@ import { randUuid } from "@ngneat/falso";
 import { ICollectionRepository } from "../../repositories/ICollectionRepository";
 import { MockCollectionRepository } from "../../repositories/prisma/mocks/MockCollectionRepository";
 import {
-  ListCollectionsByIdService,
+  ListCollectionsByIdServiceImpl,
   ServiceInput,
 } from "./ListCollectionsByIdService";
 
 describe("List all collections by cooperative/user id Service", () => {
   const repository: ICollectionRepository = new MockCollectionRepository();
-  const service = new ListCollectionsByIdService(repository);
+  const service = new ListCollectionsByIdServiceImpl(repository);
 
   it("Should be able to list all cooperative collections", async () => {
     const input: ServiceInput = { id: randUuid(), params: "cooperativeId" };

@@ -3,14 +3,11 @@ import { ICollectionRepository } from "../../repositories/ICollectionRepository"
 import { MockCollectionRepository } from "../../repositories/prisma/mocks/MockCollectionRepository";
 import { CollectionFactory } from "../../../tests/factories/CollectionFactory";
 import { CustomError } from "../../entities/CustomError";
-import {
-  ICancelCollection,
-  CancelCollectionService,
-} from "./CancelCollectionService";
+import { CancelCollectionServiceImpl } from "./CancelCollectionService";
 
 describe("Cancel Collection Service", () => {
   const repository: ICollectionRepository = new MockCollectionRepository();
-  const service: ICancelCollection = new CancelCollectionService(repository);
+  const service = new CancelCollectionServiceImpl(repository);
 
   it("Should be able to cancel a collection", async () => {
     const cooperativeId = randUuid();

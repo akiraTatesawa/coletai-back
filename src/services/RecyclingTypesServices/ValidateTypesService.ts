@@ -3,10 +3,10 @@ import { RecyclingType } from "../../@types/CollectionTypes";
 import { IRecyclingTypesRepository } from "../../repositories/IRecyclingTypesRepository";
 import { CustomError } from "../../entities/CustomError";
 
-export interface IValidateTypesService
+export interface ValidateTypesService
   extends IServiceExecute<RecyclingType[], void> {}
 
-export class ValidateTypesService implements IValidateTypesService {
+export class ValidateTypesServiceImpl implements ValidateTypesService {
   private repository: IRecyclingTypesRepository;
 
   constructor(repository: IRecyclingTypesRepository) {

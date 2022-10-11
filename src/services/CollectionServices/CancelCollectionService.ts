@@ -7,10 +7,10 @@ type CancelCollectionReqData = {
   collectionId: string;
 };
 
-export interface ICancelCollection
+export interface CancelCollectionService
   extends IServiceExecute<CancelCollectionReqData, void> {}
 
-export class CancelCollectionService implements ICancelCollection {
+export class CancelCollectionServiceImpl implements CancelCollectionService {
   private repository: ICollectionRepository;
 
   constructor(repository: ICollectionRepository) {

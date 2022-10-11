@@ -2,9 +2,9 @@
 import { Request, Response } from "express";
 
 import { Controller } from "../../@types/ControllerTypes";
-import { IListCollectionsByIdService } from "../../services/CollectionServices/ListCollectionsByIdService";
+import { ListCollectionsByIdService } from "../../services/CollectionServices/ListCollectionsByIdService";
 
-export class ListCollectionsByUserIdController extends Controller<IListCollectionsByIdService> {
+export class ListCollectionsByUserIdController extends Controller<ListCollectionsByIdService> {
   async handle(req: Request, res: Response): Promise<void> {
     const { id } = res.locals as { id: string };
 

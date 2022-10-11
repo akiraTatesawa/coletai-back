@@ -4,11 +4,11 @@ import { LoginUser } from "../../@types/UserTypes";
 import { IUserRepository } from "../../repositories/IUserRepository";
 import { CustomError } from "../../entities/CustomError";
 
-export interface ILoginUserService extends IServiceExecute<LoginUser, Token> {}
+export interface LoginUserService extends IServiceExecute<LoginUser, Token> {}
 
-export class LoginUserService
+export class LoginUserServiceImpl
   extends LoginService<IUserRepository>
-  implements ILoginUserService
+  implements LoginUserService
 {
   async execute(userLoginData: LoginUser): Promise<Token> {
     const user = await this.repository.getByEmail(userLoginData.email);

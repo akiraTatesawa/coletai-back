@@ -7,10 +7,10 @@ type FinishCollectionReqData = {
   collectionId: string;
 };
 
-export interface IFinishCollection
+export interface FinishCollectionService
   extends IServiceExecute<FinishCollectionReqData, void> {}
 
-export class FinishCollectionService implements IFinishCollection {
+export class FinishCollectionServiceImpl implements FinishCollectionService {
   private repository: ICollectionRepository;
 
   constructor(repository: ICollectionRepository) {

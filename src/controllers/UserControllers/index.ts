@@ -1,11 +1,14 @@
 import { UserRepository } from "../../repositories/prisma/UserRepository";
-import { CreateUserServiceImpl } from "../../services/UserServices/CreateUserService";
+
 import { CryptUtils } from "../../utils/CryptUtils";
 import { JWTUtils } from "../../utils/JWTUtils";
-import { CreateUserController } from "./CreateUserController";
-import { LoginUserService } from "../../services/UserServices/LoginUserService";
-import { LoginUserController } from "./LoginUserController";
+
+import { LoginUserServiceImpl } from "../../services/UserServices/LoginUserService";
+import { CreateUserServiceImpl } from "../../services/UserServices/CreateUserService";
 import { GetFullAddressServiceImpl } from "../../services/NominatimServices/GetFullAddressService";
+
+import { CreateUserController } from "./CreateUserController";
+import { LoginUserController } from "./LoginUserController";
 
 function getUserRepo() {
   return new UserRepository();
@@ -35,8 +38,7 @@ export function createUserController() {
 export function loginUserController() {
   const repository = getUserRepo();
   const { cryptUtils, jwtUtils } = getUtils();
-  const service = new LoginUserService(repository, cryptUtils, jwtUtils);
-  const controller = new LoginUserController(service);
+  const service = new LoginUserServiceImpl(repository, cryptUtils, jwtUtils);
 
-  return controller;
+  return new LoginUserController(service);
 }

@@ -1,7 +1,7 @@
 import Joi from "joi";
-import { CreateUserPrisma, LoginUser } from "../@types/UserTypes";
+import { LoginUser, CreateUserReq } from "../@types/UserTypes";
 
-export const createUserSchema = Joi.object<CreateUserPrisma>({
+export const createUserSchema = Joi.object<CreateUserReq>({
   name: Joi.string().trim().required(),
   email: Joi.string().email({ tlds: false }).trim().required(),
   password: Joi.string().required(),

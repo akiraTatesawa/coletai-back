@@ -5,10 +5,10 @@ import { CustomError } from "../../entities/CustomError";
 
 type InputUserId = Pick<User, "id">;
 
-export interface IValidateUserByIdService
+export interface ValidateUserByIdService
   extends IServiceExecute<InputUserId, User> {}
 
-export class ValidateUserByIdService implements IValidateUserByIdService {
+export class ValidateUserByIdServiceImpl implements ValidateUserByIdService {
   private repository: IUserRepository;
 
   constructor(repository: IUserRepository) {
