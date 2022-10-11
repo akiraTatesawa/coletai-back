@@ -1,6 +1,6 @@
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
 import { ICryptUtils } from "../../utils/CryptUtils";
-import { MockCooperativeRepository } from "../../repositories/prisma/mocks/MockCooperativeRepository";
+import { MockCooperativeRepository } from "../../repositories/mocks/MockCooperativeRepository";
 import { MockCryptUtils } from "../../utils/mocks/MockCryptUtils";
 import { JWTUtilsInterface } from "../../utils/JWTUtils";
 import { MockJWTUtils } from "../../utils/mocks/MockJWTUtils";

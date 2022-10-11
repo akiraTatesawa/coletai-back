@@ -1,5 +1,5 @@
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
-import { MockCooperativeRepository } from "../../repositories/prisma/mocks/MockCooperativeRepository";
+import { MockCooperativeRepository } from "../../repositories/mocks/MockCooperativeRepository";
 import { MockCryptUtils } from "../../utils/mocks/MockCryptUtils";
 import { CreateCooperativeServiceImpl } from "./CreateCooperativeService";
 import { ICryptUtils } from "../../utils/CryptUtils";

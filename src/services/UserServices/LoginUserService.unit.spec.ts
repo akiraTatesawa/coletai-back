@@ -1,16 +1,17 @@
 import { IUserRepository } from "../../repositories/IUserRepository";
-import { MockUserRepository } from "../../repositories/prisma/mocks/MockUserRepository";
+import { MockUserRepository } from "../../repositories/mocks/MockUserRepository";
 import { LoginUserService, LoginUserServiceImpl } from "./LoginUserService";
 import { JWTUtilsInterface } from "../../utils/JWTUtils";
 import { MockJWTUtils } from "../../utils/mocks/MockJWTUtils";
-import { CryptUtils, ICryptUtils } from "../../utils/CryptUtils";
+import { ICryptUtils } from "../../utils/CryptUtils";
 import { UserFactory } from "../../../tests/factories/UserFactory";
 import { CustomError } from "../../entities/CustomError";
+import { MockCryptUtils } from "../../utils/mocks/MockCryptUtils";
 
 describe("Login User Service", () => {
   const repository: IUserRepository = new MockUserRepository();
   const jwtUtils: JWTUtilsInterface = new MockJWTUtils();
-  const cryptUtils: ICryptUtils = new CryptUtils();
+  const cryptUtils: ICryptUtils = new MockCryptUtils();
   const service: LoginUserService = new LoginUserServiceImpl(
     repository,
     cryptUtils,
@@ -23,6 +24,7 @@ describe("Login User Service", () => {
     const { prismaUser, reqUser } = userFactory.generatePrismaUserData();
 
     jest.spyOn(repository, "getByEmail").mockResolvedValueOnce(prismaUser);
+    jest.spyOn(cryptUtils, "validateEncryptedData").mockReturnValueOnce(true);
     jest.spyOn(jwtUtils, "createToken").mockReturnValueOnce("token");
 
     await expect(
@@ -50,6 +52,7 @@ describe("Login User Service", () => {
     const { prismaUser, reqUser } = userFactory.generatePrismaUserData();
 
     jest.spyOn(repository, "getByEmail").mockResolvedValueOnce(prismaUser);
+    jest.spyOn(cryptUtils, "validateEncryptedData").mockReturnValueOnce(false);
 
     await expect(
       service.execute({ email: reqUser.email, password: "wrong pass" })

@@ -3,7 +3,7 @@ import { ValidateUserByIdService } from "../UserServices/ValidateUserByIdService
 import { GetCooperativesLocationService } from "../CooperativeServices/GetCooperativesLocationService";
 import { ValidateTypesService } from "../RecyclingTypesServices/ValidateTypesService";
 import { ICollectionRepository } from "../../repositories/ICollectionRepository";
-import { MockCollectionRepository } from "../../repositories/prisma/mocks/MockCollectionRepository";
+import { MockCollectionRepository } from "../../repositories/mocks/MockCollectionRepository";
 import { UserFactory } from "../../../tests/factories/UserFactory";
 import { CooperativeFactory } from "../../../tests/factories/CooperativeFactory";
 import { CollectionFactory } from "../../../tests/factories/CollectionFactory";

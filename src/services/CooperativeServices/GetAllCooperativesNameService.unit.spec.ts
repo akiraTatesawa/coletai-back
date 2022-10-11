@@ -1,5 +1,5 @@
 import { ICooperativeRepository } from "../../repositories/ICooperativeRepository";
-import { MockCooperativeRepository } from "../../repositories/prisma/mocks/MockCooperativeRepository";
+import { MockCooperativeRepository } from "../../repositories/mocks/MockCooperativeRepository";
 import { GetAllCooperativesNameServiceImpl } from "./GetAllCooperativesNameService";
 import { CooperativeFactory } from "../../../tests/factories/CooperativeFactory";
 

@@ -1,4 +1,4 @@
-import { MockUserRepository } from "../../repositories/prisma/mocks/MockUserRepository";
+import { MockUserRepository } from "../../repositories/mocks/MockUserRepository";
 import {
   ValidateUserByIdService,
   ValidateUserByIdServiceImpl,
