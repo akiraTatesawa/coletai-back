@@ -1,0 +1,41 @@
+name: Pull Request
+
+on: [pull_request]
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+
+    services:
+      db_postgres:
+        image: postgres:13
+        ports:
+          - 2345:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: coletai-test
+
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install Dependencies
+        run: npm ci
+      
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_DATABASE_URL: postgresql://postgres:postgres@localhost:2345/coletai-test?schema=public
+          envkey_JWT_SECRET: 108df808a3e7a4004246aa5490768ddbeb0e6f966a21c2c927e6fbd2
+          file_name: .env.test
+          directory: .
+          fail_on_empty: true
+
+      - name: Run all tests
+        run: npm run test
